@@ -12,20 +12,46 @@ class HeroSection extends StatefulWidget {
 }
 
 class _HeroSectionState extends State<HeroSection> {
-  int _bgIndex = 0;
+  int _imgIndex = 0;
   Timer? _timer;
 
-  final List<Color> _bgColors = [
-    const Color(0xFFF6F3F2),
-    const Color(0xFFF0EDEC),
-    const Color(0xFFEBE7E7),
+  // Carousel slides: icon + gradient + label
+  static const _slides = [
+    {
+      'icon': Icons.bedroom_parent_outlined,
+      'label': 'تنظيف غرف النوم',
+      'sub': 'نظافة عميقة لكل ركن',
+      'grad1': Color(0xFFF6F3EE),
+      'grad2': Color(0xFFEDE8DF),
+    },
+    {
+      'icon': Icons.kitchen_outlined,
+      'label': 'تنظيف المطابخ',
+      'sub': 'إزالة الدهون والبقع',
+      'grad1': Color(0xFFF0EDE8),
+      'grad2': Color(0xFFE8E2D8),
+    },
+    {
+      'icon': Icons.bathtub_outlined,
+      'label': 'تنظيف الحمامات',
+      'sub': 'تعقيم وتلميع كامل',
+      'grad1': Color(0xFFEEEDF6),
+      'grad2': Color(0xFFDFDEED),
+    },
+    {
+      'icon': Icons.weekend_outlined,
+      'label': 'تنظيف غرف المعيشة',
+      'sub': 'أريكة، سجاد، وأكثر',
+      'grad1': Color(0xFFF2EEE8),
+      'grad2': Color(0xFFE8E0D2),
+    },
   ];
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 5), (_) {
-      if (mounted) setState(() => _bgIndex = (_bgIndex + 1) % _bgColors.length);
+    _timer = Timer.periodic(const Duration(seconds: 4), (_) {
+      if (mounted) setState(() => _imgIndex = (_imgIndex + 1) % _slides.length);
     });
   }
 
@@ -40,93 +66,199 @@ class _HeroSectionState extends State<HeroSection> {
     final width = MediaQuery.of(context).size.width;
     final isMobile = width < 768;
 
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 1500),
+    return SizedBox(
       width: double.infinity,
-      constraints: BoxConstraints(minHeight: isMobile ? 500 : 700),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppTheme.surfaceWhite, _bgColors[_bgIndex]],
-          begin: Alignment.centerRight,
-          end: Alignment.centerLeft,
-        ),
-      ),
-      child: Stack(
+      height: isMobile ? null : 640,
+      child: isMobile
+          ? _buildMobileLayout()
+          : _buildDesktopLayout(),
+    );
+  }
+
+  Widget _buildDesktopLayout() {
+    return ColoredBox(
+      color: AppTheme.surfaceWhite,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Sparkle decorations
-          Positioned(
-            top: 80,
-            right: isMobile ? 20 : 150,
-            child: Icon(Icons.auto_awesome, color: AppTheme.primaryGold.withOpacity(0.3), size: 80)
-                .animate(onPlay: (c) => c.repeat(reverse: true))
-                .fadeIn(delay: 400.ms)
-                .scale(begin: const Offset(0.9, 0.9), end: const Offset(1.1, 1.1), duration: 3000.ms),
-          ),
-          Positioned(
-            bottom: 120,
-            right: isMobile ? 40 : 280,
-            child: Icon(Icons.color_lens, color: AppTheme.primaryGold.withOpacity(0.2), size: 40)
-                .animate(onPlay: (c) => c.repeat(reverse: true))
-                .slideY(begin: 0, end: -0.3, duration: 2000.ms, curve: Curves.easeInOut),
-          ),
-          // Main content
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: isMobile ? 24 : 80,
-              vertical: isMobile ? 60 : 96,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Headline
-                ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: isMobile ? double.infinity : 700),
-                  child: Text(
-                    'خدمة تنظيف منازل\nعلى الطلب',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      color: AppTheme.textDark,
-                      fontSize: isMobile ? 36 : 56,
-                      fontWeight: FontWeight.w800,
-                      height: 1.15,
-                      letterSpacing: -0.5,
-                    ),
-                  ).animate().fadeIn(duration: 800.ms).slideX(begin: 0.1),
-                ),
-                const SizedBox(height: 24),
-                // Subtitle
-                ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: isMobile ? double.infinity : 540),
-                  child: Text(
-                    'نحن نعيد تعريف مفهوم النظافة المنزلية. استمتع بمعايير الفنادق الفاخرة في منزلك الخاص مع فريقنا المدرب بعناية فائقة.',
-                    textAlign: TextAlign.right,
-                    style: const TextStyle(
-                      color: AppTheme.textMuted,
-                      fontSize: 18,
-                      height: 1.7,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ).animate().fadeIn(delay: 150.ms, duration: 800.ms),
-                ),
-                const SizedBox(height: 40),
-                // CTA Buttons
-                Wrap(
-                  spacing: 16,
-                  runSpacing: 12,
-                  children: [
-                    _GoldButton(label: 'ابدأ الآن', onTap: widget.onCta),
-                    _OutlineButton(label: 'اكتشف خدماتنا'),
-                  ],
-                ).animate().fadeIn(delay: 300.ms, duration: 800.ms),
-                if (!isMobile) ...[
-                  const SizedBox(height: 64),
-                  _StatsRow().animate().fadeIn(delay: 500.ms, duration: 800.ms),
+          // Left: text content
+          Expanded(
+            flex: 5,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 80),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildTextContent(false),
                 ],
-              ],
+              ),
             ),
+          ),
+          // Right: image carousel (fixed width, fills row height)
+          SizedBox(
+            width: 420,
+            child: _buildCarousel(false),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildMobileLayout() {
+    return Column(
+      children: [
+        SizedBox(height: 280, child: _buildCarousel(true)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+          child: _buildTextContent(true),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCarousel(bool isMobile) {
+    final slide = _slides[_imgIndex];
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 800),
+      transitionBuilder: (child, anim) => FadeTransition(
+        opacity: anim,
+        child: SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0.05, 0),
+            end: Offset.zero,
+          ).animate(CurvedAnimation(parent: anim, curve: Curves.easeOut)),
+          child: child,
+        ),
+      ),
+      child: Container(
+        key: ValueKey(_imgIndex),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [slide['grad1'] as Color, slide['grad2'] as Color],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: isMobile
+              ? BorderRadius.zero
+              : const BorderRadius.only(
+                  topLeft: Radius.circular(32),
+                  bottomLeft: Radius.circular(32),
+                ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Big icon card
+            Container(
+              width: 140,
+              height: 140,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.7),
+                borderRadius: BorderRadius.circular(32),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppTheme.primaryGold.withOpacity(0.15),
+                    blurRadius: 40,
+                    spreadRadius: 0,
+                  ),
+                ],
+              ),
+              child: Icon(
+                slide['icon'] as IconData,
+                color: AppTheme.primaryDark,
+                size: 64,
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              slide['label'] as String,
+              style: const TextStyle(
+                color: AppTheme.textDark,
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              slide['sub'] as String,
+              style: const TextStyle(
+                color: AppTheme.textMuted,
+                fontSize: 14,
+              ),
+            ),
+            const SizedBox(height: 28),
+            // Dots indicator
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                _slides.length,
+                (i) => AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  width: i == _imgIndex ? 20 : 7,
+                  height: 7,
+                  decoration: BoxDecoration(
+                    color: i == _imgIndex
+                        ? AppTheme.primaryGold
+                        : AppTheme.primaryGold.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextContent(bool isMobile) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: isMobile ? double.infinity : 600),
+          child: Text(
+            'خدمة تنظيف منازل\nعلى الطلب',
+            textAlign: TextAlign.right,
+            style: TextStyle(
+              color: AppTheme.textDark,
+              fontSize: isMobile ? 32 : 52,
+              fontWeight: FontWeight.w800,
+              height: 1.15,
+              letterSpacing: -0.5,
+            ),
+          ).animate().fadeIn(duration: 800.ms).slideX(begin: 0.1),
+        ),
+        const SizedBox(height: 24),
+        ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: isMobile ? double.infinity : 480),
+          child: Text(
+            'نحن نعيد تعريف مفهوم النظافة المنزلية. استمتع بمعايير الفنادق الفاخرة في منزلك الخاص مع فريقنا المدرب بعناية فائقة.',
+            textAlign: TextAlign.right,
+            style: const TextStyle(
+              color: AppTheme.textMuted,
+              fontSize: 17,
+              height: 1.7,
+              fontWeight: FontWeight.w400,
+            ),
+          ).animate().fadeIn(delay: 150.ms, duration: 800.ms),
+        ),
+        const SizedBox(height: 40),
+        Wrap(
+          spacing: 16,
+          runSpacing: 12,
+          children: [
+            _GoldButton(label: 'ابدأ الآن', onTap: widget.onCta),
+            _OutlineButton(label: 'اكتشف خدماتنا'),
+          ],
+        ).animate().fadeIn(delay: 300.ms, duration: 800.ms),
+        if (!isMobile) ...[
+          const SizedBox(height: 56),
+          _StatsRow().animate().fadeIn(delay: 500.ms, duration: 800.ms),
+        ],
+      ],
     );
   }
 }

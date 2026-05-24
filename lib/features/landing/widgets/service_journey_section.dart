@@ -10,6 +10,7 @@ class ServiceJourneySection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 768;
     return Container(
+      color: const Color(0xFF111214),
       padding: EdgeInsets.symmetric(
           horizontal: isMobile ? 24 : 80, vertical: 80),
       child: Column(
