@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>نازافلي - رحلة الخدمة المميزة</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&amp;family=Poppins:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e6c21a",
+                        "surface": "#fcf9f8",
+                        "surface-dim": "#dcd9d9",
+                        "surface-bright": "#fcf9f8",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f6f3f2",
+                        "on-surface": "#1c1b1b",
+                        "outline": "#7e7761",
+                        "secondary": "#635e4f",
+                        "success": "#2D8E5B",
+                        "error": "#ba1a1a"
+                    },
+                    fontFamily: {
+                        "headline": ["Cairo", "Poppins", "sans-serif"],
+                        "body": ["Cairo", "Poppins", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #F6F4EE; overflow-x: hidden; font-family: 'Cairo', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        
+        /* Particle Background */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #e6c21a;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 6s infinite ease-in-out;
+            opacity: 0.4;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+            50% { transform: translate(-20px, -40px) scale(1.5); opacity: 0.7; }
+        }
+
+        /* Phone Frame */
+        .phone-mockup {
+            width: 340px;
+            height: 680px;
+            border: 12px solid #1c1b1b;
+            border-radius: 48px;
+            position: relative;
+            background: #ffffff;
+            overflow: hidden;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.2);
+        }
+
+        /* Stage Containers */
+        .stage-container {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: scale(0.95);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+        }
+        .stage-active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+
+        /* Animations */
+        .loader {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #FFF;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .pulse-radiate {
+            animation: radiate 2s infinite;
+        }
+        @keyframes radiate {
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        .shake { animation: shake 0.5s ease-in-out; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #e6c21a;
+            top: -20px;
+            animation: fall 3s linear forwards;
+            z-index: 100;
+        }
+        @keyframes fall {
+            to { transform: translateY(700px) rotate(720deg); }
+        }
+
+        .progress-striped {
+            background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+            background-size: 1rem 1rem;
+            animation: progress-bar-stripes 1s linear infinite;
+        }
+        @keyframes progress-bar-stripes {
+            from { background-position: 1rem 0; }
+            to { background-position: 0 0; }
+        }
+
+        .chat-bubble-right { border-radius: 20px 20px 20px 4px; transform: translateX(20px); opacity: 0; transition: all 0.4s ease; }
+        .chat-bubble-left { border-radius: 20px 20px 4px 20px; transform: translateX(-20px); opacity: 0; transition: all 0.4s ease; }
+        .chat-show { transform: translateX(0); opacity: 1; }
+
+        .typing-indicator span {
+            width: 4px;
+            height: 4px;
+            background-color: #7e7761;
+            border-radius: 50%;
+            display: inline-block;
+            animation: typing 1s infinite;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+        [dir="rtl"] { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+<!-- Desktop Background Particles -->
+<div class="fixed inset-0 z-0 pointer-events-none" id="particle-container"></div>
+<header class="fixed top-0 w-full flex justify-between items-center px-8 py-6 z-50">
+<h1 class="text-2xl font-bold text-primary font-headline">نازافلي</h1>
+<div class="hidden md:flex gap-8 text-secondary font-medium">
+<span>التجربة</span>
+<span>الخدمة</span>
+<span>التقنية</span>
+</div>
+<span class="material-symbols-outlined text-primary cursor-pointer">account_circle</span>
+</header>
+<main class="relative z-10 flex flex-col items-center gap-6 mt-8">
+<div class="text-center">
+<h2 class="text-3xl font-bold text-on-surface mb-2 font-headline">الدقة في الحركة</h2>
+<p class="text-secondary max-w-sm">اختبر الرحلة الكاملة لخدماتنا المميزة.</p>
+</div>
+<div class="phone-mockup" id="phone-screen">
+<!-- App Bar -->
+<div class="h-14 flex items-center justify-between px-6 bg-white/80 backdrop-blur sticky top-0 z-[100] border-b border-surface-container-low" dir="rtl">
+<span class="text-primary font-bold tracking-tight">نازافلي</span>
+<span class="material-symbols-outlined text-secondary text-xl">notifications</span>
+</div>
+<!-- STAGE 1: Request Initiation (0-3s) -->
+<div class="stage-container stage-active bg-white" dir="rtl" id="stage-1">
+<div class="flex-1 flex flex-col items-center justify-center p-8 text-center">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">home_repair_service</span>
+</div>
+<h3 class="text-xl font-bold mb-2 font-headline">حجز خدمة مميزة</h3>
+<p class="text-sm text-secondary">خدمات احترافية مصممة خصيصاً لتصلك حتى باب منزلك.</p>
+</div>
+<div class="bg-surface-container-low p-6 rounded-t-[32px] translate-y-full transition-transform duration-700" id="booking-form-slide">
+<div class="space-y-4 mb-6">
+<div class="flex justify-between items-center bg-white p-3 rounded-xl border border-outline/10">
+<span class="text-sm font-semibold">عدد الغرف</span>
+<div class="flex items-center gap-4">
+<button class="w-8 h-8 rounded-full border border-outline/20 flex items-center justify-center text-primary" id="room-minus">-</button>
+<span class="font-bold w-4 text-center" id="room-count">١</span>
+<button class="w-8 h-8 rounded-full border border-outline/20 flex items-center justify-center text-primary" id="room-plus">+</button>
+</div>
+</div>
+<div class="bg-white p-3 rounded-xl border border-outline/10">
+<label class="text-[10px] uppercase font-bold text-secondary mb-1 block">موقعك</label>
+<p class="text-sm font-medium">شارع ٩، المعادي، القاهرة</p>
+</div>
+</div>
+<button class="w-full bg-primary text-white py-4 rounded-2xl font-bold shadow-lg flex items-center justify-center gap-2" id="request-btn">
+<span id="btn-text">اطلب الخدمة</span>
+<span class="loader hidden" id="btn-loader"></span>
+</button>
+</div>
+</div>
+<!-- STAGE 2: Broadcasting (3-6s) -->
+<div class="stage-container bg-surface-container-low" dir="rtl" id="stage-2">
+<div class="relative flex-1 bg-gray-200 overflow-hidden">
+<svg class="absolute inset-0 w-full h-full opacity-40" preserveaspectratio="none" viewbox="0 0 100 100">
+<path d="M0 20 H100 M0 50 H100 M0 80 H100 M20 0 V100 M50 0 V100 M80 0 V100" stroke="#7e7761" stroke-width="0.2"></path>
+</svg>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<div class="absolute inset-0 w-12 h-12 bg-primary/20 rounded-full pulse-radiate"></div>
+<div class="absolute inset-0 w-12 h-12 bg-primary/10 rounded-full pulse-radiate" style="animation-delay: 1s"></div>
+<div class="relative w-4 h-4 bg-primary rounded-full border-2 border-white shadow-lg"></div>
+</div>
+<!-- Worker Icons -->
+<div class="absolute top-1/4 left-1/4 text-primary animate-bounce"><span class="material-symbols-outlined">person_pin_circle</span></div>
+<div class="absolute bottom-1/3 right-1/4 text-primary animate-pulse" style="animation-duration: 2s"><span class="material-symbols-outlined">person_pin_circle</span></div>
+</div>
+<div class="bg-white p-6 rounded-t-[32px] text-center shadow-xl">
+<h4 class="font-bold text-lg mb-1">جاري البحث عن عمال متاحين...</h4>
+<p class="text-sm text-secondary"><span id="nearby-count">١٢</span> عامل متوفر حالياً</p>
+</div>
+</div>
+<!-- STAGE 3: Accept Race (6-9s) -->
+<div class="stage-container bg-surface-container-low p-6" dir="rtl" id="stage-3">
+<div class="absolute top-4 left-4 right-4 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 border-r-4 border-primary slide-in-top" id="match-notif">
+<div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<div>
+<p class="text-[10px] font-bold uppercase text-secondary">طلب جديد</p>
+<p class="text-sm font-bold">اقبل العرض لخدمة فورية!</p>
+</div>
+</div>
+<div class="mt-20 flex flex-col items-center flex-1">
+<div class="w-24 h-24 rounded-full border-4 border-primary overflow-hidden shadow-2xl mb-4">
+<img alt="Worker" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCtyvT5_gNH2UV_garhmODPrklGhEGt7b-B5u6drIJZ2PD71Ep3C4UM1tjFzLhHHfrSOTDmJLeTQh-IigqhLOa5MKVI9dC64Cc8r0XNfa-H_pewuvGH4DqU2eEiBmREzBdK1IqbNZqXLLTEBDalwbdONDYOWoK0bidNsfgLVHq25-RJyMInJGymudIslx6DMiac3gbMiw_7UWHfdd0vk3HLs5M-Qc2iJu52mbsCRAdhxGm1mPnUChzEM2dLwERuhvGjbWM62C1N8LP"/>
+</div>
+<h3 class="text-xl font-bold">أحمد محمد</h3>
+<div class="flex items-center gap-1 text-primary mb-6">
+<span class="material-symbols-outlined text-sm font-fill">star</span>
+<span class="font-bold">٤.٩</span>
+<span class="text-xs text-secondary">(+٢٥٠ تقييم)</span>
+</div>
+<button class="w-full bg-success text-white py-4 rounded-2xl font-bold shadow-lg transition-transform scale-100" id="accept-race-btn">
+                        قبول
+                    </button>
+</div>
+</div>
+<!-- STAGE 4 & 5: Success & Navigation (9-15s) -->
+<div class="stage-container" dir="rtl" id="stage-4-5">
+<div class="relative h-[60%] bg-gray-100">
+<div class="absolute inset-0 bg-gray-200"></div>
+<!-- Path Animation -->
+<svg class="absolute inset-0 w-full h-full" id="map-path-svg">
+<path d="M170 350 L170 100" fill="none" id="route-path" stroke="#e6c21a" stroke-dasharray="250" stroke-dashoffset="250" stroke-width="4"></path>
+</svg>
+<div class="absolute top-[100px] left-1/2 -translate-x-1/2 text-primary">
+<span class="material-symbols-outlined text-4xl">home</span>
+</div>
+<div class="absolute bottom-[30px] left-1/2 -translate-x-1/2 text-success transition-all duration-[3000ms] ease-linear" id="nav-worker">
+<span class="material-symbols-outlined text-3xl">directions_car</span>
+</div>
+<!-- Confetti container -->
+<div id="success-confetti-wrap"></div>
+<div class="absolute inset-0 flex items-center justify-center bg-white/40 hidden" id="check-overlay">
+<div class="w-20 h-20 bg-success text-white rounded-full flex items-center justify-center animate-bounce shadow-2xl">
+<span class="material-symbols-outlined text-5xl">check</span>
+</div>
+</div>
+</div>
+<div class="flex-1 bg-white p-6 rounded-t-[32px] shadow-2xl relative z-20">
+<div class="flex justify-between items-center mb-6">
+<div>
+<p class="text-[10px] font-bold text-secondary uppercase">الوصول المتوقع</p>
+<p class="text-xl font-bold" id="eta-text">٨ دقائق</p>
+</div>
+<div class="text-left">
+<p class="text-[10px] font-bold text-secondary uppercase">المسافة</p>
+<p class="text-xl font-bold text-primary" id="distance-text">١.٢ كم</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-low p-3 rounded-2xl">
+<div class="w-12 h-12 rounded-full overflow-hidden">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCtyvT5_gNH2UV_garhmODPrklGhEGt7b-B5u6drIJZ2PD71Ep3C4UM1tjFzLhHHfrSOTDmJLeTQh-IigqhLOa5MKVI9dC64Cc8r0XNfa-H_pewuvGH4DqU2eEiBmREzBdK1IqbNZqXLLTEBDalwbdONDYOWoK0bidNsfgLVHq25-RJyMInJGymudIslx6DMiac3gbMiw_7UWHfdd0vk3HLs5M-Qc2iJu52mbsCRAdhxGm1mPnUChzEM2dLwERuhvGjbWM62C1N8LP"/>
+</div>
+<div>
+<p class="font-bold">أحمد محمد</p>
+<p class="text-xs text-secondary">العامل في الطريق إليك</p>
+</div>
+<button class="mr-auto w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">call</span>
+</button>
+</div>
+</div>
+</div>
+<!-- STAGE 6, 7, 8: Arrival, Communication, Progress (15-24s) -->
+<div class="stage-container bg-white p-6" dir="rtl" id="stage-6-8">
+<div class="flex items-center gap-4 mb-8 bg-surface-container-low p-4 rounded-2xl relative" id="arrival-header">
+<div class="w-14 h-14 rounded-full border-2 border-primary overflow-hidden relative">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCtyvT5_gNH2UV_garhmODPrklGhEGt7b-B5u6drIJZ2PD71Ep3C4UM1tjFzLhHHfrSOTDmJLeTQh-IigqhLOa5MKVI9dC64Cc8r0XNfa-H_pewuvGH4DqU2eEiBmREzBdK1IqbNZqXLLTEBDalwbdONDYOWoK0bidNsfgLVHq25-RJyMInJGymudIslx6DMiac3gbMiw_7UWHfdd0vk3HLs5M-Qc2iJu52mbsCRAdhxGm1mPnUChzEM2dLwERuhvGjbWM62C1N8LP"/>
+</div>
+<div>
+<h4 class="font-bold">أحمد محمد</h4>
+<p class="text-xs text-success flex items-center gap-1">
+<span class="w-2 h-2 bg-success rounded-full"></span> وصل العامل / بالموقع
+                        </p>
+</div>
+<div class="absolute -top-4 -left-4 text-primary opacity-0 scale-0 transition-all duration-500" id="arrival-star">
+<span class="material-symbols-outlined text-4xl">auto_awesome</span>
+</div>
+</div>
+<!-- Chat (RTL) -->
+<div class="space-y-3 mb-8 h-24 overflow-hidden">
+<div class="chat-bubble-right bg-primary/10 p-3 text-xs font-medium max-w-[80%] float-right clear-both" id="chat-1">
+                        أهلاً بك، أنا في طريقي لبدء الخدمة الآن.
+                    </div>
+<div class="chat-bubble-left bg-surface-dim/30 p-3 text-xs font-medium max-w-[80%] float-left clear-both" id="chat-2">
+                        تمام، شكراً جزيلاً. أنا بانتظارك.
+                    </div>
+<div class="float-right clear-both hidden" id="typing">
+<div class="bg-primary/5 p-2 px-4 rounded-full typing-indicator">
+<span></span><span></span><span></span>
+</div>
+</div>
+</div>
+<!-- Progress Section -->
+<div class="space-y-6 clear-both">
+<div class="space-y-2">
+<div class="flex justify-between text-[10px] font-bold uppercase text-secondary">
+<span>التنظيف الأولي</span>
+<span id="p1-percent">0%</span>
+</div>
+<div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary progress-striped transition-all duration-1000" id="p1-bar" style="width: 0%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-[10px] font-bold uppercase text-secondary">
+<span>تنظيف عميق</span>
+<span id="p2-percent">0%</span>
+</div>
+<div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary progress-striped transition-all duration-1000" id="p2-bar" style="width: 0%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- STAGE 9, 10, 11: Completion, Rating, Payment (24-33s) -->
+<div class="stage-container bg-white" dir="rtl" id="stage-9-11">
+<div class="flex-1 flex flex-col items-center justify-center p-8 text-center" id="completion-view">
+<div id="final-confetti-box"></div>
+<div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6 relative">
+<span class="material-symbols-outlined text-primary text-5xl">verified</span>
+<div class="absolute -top-2 -right-2 text-2xl">🔥</div>
+</div>
+<h3 class="text-2xl font-bold mb-2">اكتملت الخدمة!</h3>
+<p class="text-secondary text-sm mb-8">كيف كانت تجربتك مع أحمد؟</p>
+<div class="flex gap-2 mb-8" id="rating-stars">
+<span class="material-symbols-outlined text-gray-300 text-3xl cursor-pointer hover:text-primary transition-colors">star</span>
+<span class="material-symbols-outlined text-gray-300 text-3xl cursor-pointer hover:text-primary transition-colors">star</span>
+<span class="material-symbols-outlined text-gray-300 text-3xl cursor-pointer hover:text-primary transition-colors">star</span>
+<span class="material-symbols-outlined text-gray-300 text-3xl cursor-pointer hover:text-primary transition-colors">star</span>
+<span class="material-symbols-outlined text-gray-300 text-3xl cursor-pointer hover:text-primary transition-colors">star</span>
+</div>
+<div class="w-full opacity-0 transition-opacity duration-500 mb-6" id="comment-field">
+<textarea class="w-full bg-surface-container-low border-none rounded-2xl p-4 text-sm focus:ring-primary" placeholder="اكتب تعليقك هنا..."></textarea>
+</div>
+<button class="w-full bg-primary text-white py-4 rounded-2xl font-bold shadow-lg animate-pulse" id="confirm-btn">
+                        تأكيد الإنتهاء
+                    </button>
+</div>
+<div class="absolute inset-0 bg-white z-[60] flex flex-col items-center justify-center p-8 text-center hidden" id="payment-overlay">
+<div class="w-16 h-16 border-4 border-primary rounded-full flex items-center justify-center mb-6" id="lock-rotate">
+<span class="material-symbols-outlined text-primary text-3xl">lock</span>
+</div>
+<p class="text-secondary font-bold text-sm uppercase mb-2">المبلغ الإجمالي</p>
+<p class="text-4xl font-bold mb-8 text-on-surface" id="price-counter">٠ ج.م</p>
+<div class="scale-0 opacity-0 transition-all duration-500" id="final-thankyou">
+<div class="w-20 h-20 bg-success text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
+<span class="material-symbols-outlined text-5xl">check_circle</span>
+</div>
+<h3 class="text-2xl font-bold text-success mb-2">تم الدفع بنجاح</h3>
+<p class="text-secondary text-sm">شكراً لاستخدامك نازافلي. رأيك يهمنا.</p>
+</div>
+</div>
+</div>
+</div>
+<button class="flex items-center gap-2 text-primary font-bold hover:underline py-4" id="replay-btn">
+<span class="material-symbols-outlined text-sm">replay</span>
+            إعادة الرحلة
+        </button>
+</main>
+<script>
+        // Utilities
+        const $ = (id) => document.getElementById(id);
+        const toArDigits = (n) => n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+
+        const stage = (num) => {
+            document.querySelectorAll('.stage-container').forEach(s => s.classList.remove('stage-active'));
+            const s = $(`stage-${num}`) || $(num);
+            if(s) s.classList.add('stage-active');
+        };
+
+        // Initialize Background Particles
+        const initParticles = () => {
+            const container = $('particle-container');
+            container.innerHTML = '';
+            for (let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.top = Math.random() * 100 + 'vh';
+                p.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(p);
+            }
+        };
+
+        const createConfetti = (containerId) => {
+            const container = $(containerId);
+            for (let i = 0; i < 50; i++) {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                c.style.left = Math.random() * 340 + 'px';
+                c.style.backgroundColor = i % 2 === 0 ? '#e6c21a' : '#2D8E5B';
+                c.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(c);
+                setTimeout(() => c.remove(), 4000);
+            }
+        };
+
+        // Journey State Manager
+        const startJourney = () => {
+            resetJourney();
+            
+            // 1. Request Initiation (0-3s)
+            setTimeout(() => {
+                $('booking-form-slide').style.transform = 'translateY(0)';
+            }, 300);
+
+            let roomCount = 1;
+            const updateRooms = () => $('room-count').innerText = toArDigits(roomCount);
+            $('room-plus').onclick = () => { roomCount++; updateRooms(); };
+            $('room-minus').onclick = () => { roomCount = Math.max(1, roomCount - 1); updateRooms(); };
+
+            $('request-btn').onclick = () => {
+                $('btn-text').classList.add('hidden');
+                $('btn-loader').classList.remove('hidden');
+                
+                // 2. Broadcasting (3-6s)
+                setTimeout(() => {
+                    stage(2);
+                    let count = 0;
+                    const nearbyInt = setInterval(() => {
+                        count += Math.floor(Math.random() * 3);
+                        $('nearby-count').innerText = toArDigits(Math.min(12, count));
+                        if(count >= 12) clearInterval(nearbyInt);
+                    }, 200);
+
+                    // 3. Accept Race (6-9s)
+                    setTimeout(() => {
+                        stage(3);
+                        $('match-notif').classList.add('shake');
+                        
+                        $('accept-race-btn').onclick = () => {
+                            $('accept-race-btn').style.transform = 'scale(1.1)';
+                            $('accept-race-btn').innerText = 'جاري القبول...';
+                            
+                            // 4. Successful Accept & Path (9-12s)
+                            setTimeout(() => {
+                                stage('stage-4-5');
+                                $('check-overlay').classList.remove('hidden');
+                                createConfetti('success-confetti-wrap');
+                                
+                                setTimeout(() => {
+                                    $('check-overlay').classList.add('hidden');
+                                    // 5. Worker Navigation (12-15s)
+                                    $('route-path').style.strokeDashoffset = '0';
+                                    $('nav-worker').style.bottom = '280px';
+                                    
+                                    let distance = 1.2;
+                                    const distInt = setInterval(() => {
+                                        distance -= 0.1;
+                                        $('distance-text').innerText = toArDigits(Math.max(0.1, distance).toFixed(1)) + ' كم';
+                                        $('eta-text').innerText = toArDigits(Math.ceil(distance * 7)) + ' دقائق';
+                                        if(distance <= 0.2) clearInterval(distInt);
+                                    }, 250);
+
+                                    // 6. Arrival & Service (15-18s)
+                                    setTimeout(() => {
+                                        stage('stage-6-8');
+                                        $('arrival-star').classList.remove('opacity-0', 'scale-0');
+                                        $('arrival-star').classList.add('opacity-1', 'scale-100');
+                                        
+                                        // 7. Communication (18-21s)
+                                        setTimeout(() => {
+                                            $('chat-1').classList.add('chat-show');
+                                            setTimeout(() => {
+                                                $('typing').classList.remove('hidden');
+                                                setTimeout(() => {
+                                                    $('typing').classList.add('hidden');
+                                                    $('chat-2').classList.add('chat-show');
+                                                }, 1500);
+                                            }, 1000);
+
+                                            // 8. Progress Updates (21-24s)
+                                            setTimeout(() => {
+                                                const fillBar = (id, percentId, val) => {
+                                                    $(id).style.width = val + '%';
+                                                    $(percentId).innerText = toArDigits(val) + '%';
+                                                };
+                                                
+                                                let p1 = 0;
+                                                const p1Int = setInterval(() => {
+                                                    p1 += 10;
+                                                    fillBar('p1-bar', 'p1-percent', p1);
+                                                    if(p1 >= 100) {
+                                                        clearInterval(p1Int);
+                                                        let p2 = 0;
+                                                        const p2Int = setInterval(() => {
+                                                            p2 += 10;
+                                                            fillBar('p2-bar', 'p2-percent', p2);
+                                                            if(p2 >= 100) clearInterval(p2Int);
+                                                        }, 100);
+                                                    }
+                                                }, 100);
+
+                                                // 9. Completion (24-27s)
+                                                setTimeout(() => {
+                                                    stage('stage-9-11');
+                                                    createConfetti('final-confetti-box');
+                                                    
+                                                    // 10. Rating & Feedback (27-30s)
+                                                    const stars = $('rating-stars').children;
+                                                    Array.from(stars).forEach((star, idx) => {
+                                                        star.onclick = () => {
+                                                            for(let i=0; i<=idx; i++) {
+                                                                stars[i].classList.add('text-primary');
+                                                                stars[i].style.transform = 'scale(1.2)';
+                                                            }
+                                                            $('comment-field').classList.remove('opacity-0');
+                                                        };
+                                                    });
+
+                                                    $('confirm-btn').onclick = () => {
+                                                        // 11. Payment (30-33s)
+                                                        $('payment-overlay').classList.remove('hidden');
+                                                        $('lock-rotate').style.transform = 'rotate(360deg)';
+                                                        $('lock-rotate').style.transition = 'all 1s ease';
+                                                        
+                                                        let price = 0;
+                                                        const priceInt = setInterval(() => {
+                                                            price += 15;
+                                                            $('price-counter').innerText = toArDigits(price) + ' ج.م';
+                                                            if(price >= 350) {
+                                                                clearInterval(priceInt);
+                                                                $('price-counter').innerText = toArDigits(350) + ' ج.م';
+                                                                $('final-thankyou').classList.remove('scale-0', 'opacity-0');
+                                                            }
+                                                        }, 50);
+                                                    };
+                                                }, 3000);
+
+                                            }, 3000);
+                                        }, 1000);
+                                    }, 3000);
+                                }, 3000);
+                            }, 500);
+                        };
+                    }, 3000);
+                }, 1500);
+            };
+        };
+
+        const resetJourney = () => {
+            stage(1);
+            $('booking-form-slide').style.transform = 'translateY(100%)';
+            $('btn-text').classList.remove('hidden');
+            $('btn-loader').classList.add('hidden');
+            $('room-count').innerText = '١';
+            $('nearby-count').innerText = '٠';
+            $('route-path').style.strokeDashoffset = '250';
+            $('nav-worker').style.bottom = '30px';
+            $('distance-text').innerText = '١.٢ كم';
+            $('eta-text').innerText = '٨ دقائق';
+            $('arrival-star').classList.add('opacity-0', 'scale-0');
+            $('chat-1').classList.remove('chat-show');
+            $('chat-2').classList.remove('chat-show');
+            $('p1-bar').style.width = '0%';
+            $('p2-bar').style.width = '0%';
+            $('p1-percent').innerText = '0%';
+            $('p2-percent').innerText = '0%';
+            $('comment-field').classList.add('opacity-0');
+            $('accept-race-btn').innerText = 'قبول';
+            Array.from($('rating-stars').children).forEach(s => {
+                s.classList.remove('text-primary');
+                s.style.transform = 'scale(1)';
+            });
+            $('payment-overlay').classList.add('hidden');
+            $('final-thankyou').classList.add('scale-0', 'opacity-0');
+            $('price-counter').innerText = '٠ ج.م';
+        };
+
+        $('replay-btn').onclick = startJourney;
+
+        initParticles();
+        window.onload = startJourney;
+    </script>
+</body></html>
