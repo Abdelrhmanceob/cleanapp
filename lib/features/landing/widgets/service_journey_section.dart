@@ -9,16 +9,18 @@ class ServiceJourneySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 768;
-    return Container(
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Container(
       color: const Color(0xFF111214),
       padding: EdgeInsets.symmetric(
           horizontal: isMobile ? 24 : 80, vertical: 80),
       child: Column(
         children: [
-          _SectionLabel(label: 'LIVE DEMO'),
+          _SectionLabel(label: 'تجربة تفاعلية'),
           const SizedBox(height: 16),
           Text(
-            'Precision in Motion',
+            'رحلة الخدمة خطوة بخطوة',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
@@ -29,7 +31,7 @@ class ServiceJourneySection extends StatelessWidget {
           ).animate().fadeIn(duration: 600.ms),
           const SizedBox(height: 8),
           Text(
-            'Experience the complete service journey — from booking to payment.',
+            'من الحجز حتى الدفع — شاهد كيف يعمل دكتور كلينر',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white.withOpacity(0.45),
@@ -43,6 +45,7 @@ class ServiceJourneySection extends StatelessWidget {
               : const _JourneyDesktopLayout(),
         ],
       ),
+    ),
     );
   }
 }
@@ -63,28 +66,33 @@ class _JourneyDesktopLayoutState extends State<_JourneyDesktopLayout> {
 
   static const _stageInfo = [
     {
-      'title': 'Choose Your Service',
-      'desc': 'Open the app and select the service type, preferred time, and location with just a few taps.',
+      'title': 'اختر خدمتك',
+      'desc':
+          'افتح التطبيق وحدد نوع الخدمة والموعد والموقع بضغات قليلة.',
     },
     {
-      'title': 'AI Broadcasts Request',
-      'desc': 'Our engine instantly notifies the nearest available professionals in real-time.',
+      'title': 'بث الطلب للعمال',
+      'desc':
+          'ينبه النظام أقرب المحترفين المتاحين فوراً في الوقت الفعلي.',
     },
     {
-      'title': 'Worker Matched!',
-      'desc': 'The best-rated professional accepts your request. View their profile and ratings instantly.',
+      'title': 'تم تعيين عامل!',
+      'desc':
+          'يقبل أفضل عامل طلبك. اطلع على ملفه وتقييماته على الفور.',
     },
     {
-      'title': 'Live Navigation',
-      'desc': 'Track your worker on a live map with real-time ETA updates as they head to you.',
+      'title': 'تتبّع مباشر على الخريطة',
+      'desc':
+          'تابع العامل على خريطة حية مع تحديث وقت الوصول لحظياً أثناء توجهه إليك.',
     },
     {
-      'title': 'Service In Progress',
-      'desc': 'Communicate with your worker directly and monitor live progress updates.',
+      'title': 'الخدمة قيد التنفيذ',
+      'desc': 'تواصل مع العامل وراقب تقدم التنظيف مباشرة.',
     },
     {
-      'title': 'Done & Paid!',
-      'desc': 'Rate your experience and payment is processed automatically. Full receipt provided.',
+      'title': 'اكتملت والدفع!',
+      'desc':
+          'قيّم تجربتك ويتم الدفع تلقائياً مع إيصال كامل.',
     },
   ];
 
@@ -96,7 +104,7 @@ class _JourneyDesktopLayoutState extends State<_JourneyDesktopLayout> {
         // Left step labels
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: List.generate(
               _stageInfo.length,
               (i) => _StepLabel(
@@ -120,12 +128,42 @@ class _JourneyDesktopLayoutState extends State<_JourneyDesktopLayout> {
   }
 }
 
-class _JourneyMobileLayout extends StatelessWidget {
+class _JourneyMobileLayout extends StatefulWidget {
   const _JourneyMobileLayout();
 
   @override
+  State<_JourneyMobileLayout> createState() => _JourneyMobileLayoutState();
+}
+
+class _JourneyMobileLayoutState extends State<_JourneyMobileLayout> {
+  int _stage = 0;
+
+  static const _stageTitles = [
+    'اختر خدمتك',
+    'بث الطلب للعمال',
+    'تم تعيين عامل!',
+    'تتبّع مباشر على الخريطة',
+    'الخدمة قيد التنفيذ',
+    'اكتملت والدفع!',
+  ];
+
+  @override
   Widget build(BuildContext context) {
-    return const _PhoneJourneyMockup();
+    return Column(
+      children: [
+        _PhoneJourneyMockup(onStageChange: (s) => setState(() => _stage = s)),
+        const SizedBox(height: 20),
+        Text(
+          '${_stage + 1}. ${_stageTitles[_stage]}',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 15,
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -194,6 +232,7 @@ class _StepLabel extends StatelessWidget {
                 children: [
                   Text(
                     title,
+                    textAlign: TextAlign.right,
                     style: TextStyle(
                       color: isActive ? Colors.white : Colors.white.withOpacity(0.6),
                       fontWeight: FontWeight.w600,
@@ -204,6 +243,7 @@ class _StepLabel extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       desc,
+                      textAlign: TextAlign.right,
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.45),
                         fontSize: 12,
@@ -237,12 +277,12 @@ class _PhoneJourneyMockupState extends State<_PhoneJourneyMockup>
   late AnimationController _navController;
 
   static const _stages = [
-    {'icon': Icons.home_repair_service, 'label': 'Book a Service', 'color': AppTheme.primaryGold},
-    {'icon': Icons.radar, 'label': 'Finding Workers...', 'color': Colors.blueAccent},
-    {'icon': Icons.person_pin_circle, 'label': 'Worker Matched!', 'color': AppTheme.successGreen},
-    {'icon': Icons.directions_car, 'label': 'Worker En Route', 'color': Colors.orange},
-    {'icon': Icons.cleaning_services, 'label': 'Service In Progress', 'color': AppTheme.primaryGold},
-    {'icon': Icons.verified, 'label': 'Done & Paid!', 'color': AppTheme.successGreen},
+    {'icon': Icons.home_repair_service, 'label': 'حجز الخدمة', 'color': AppTheme.primaryGold},
+    {'icon': Icons.radar, 'label': 'جاري البحث...', 'color': Colors.blueAccent},
+    {'icon': Icons.person_pin_circle, 'label': 'تم التعيين!', 'color': AppTheme.successGreen},
+    {'icon': Icons.directions_car, 'label': 'في الطريق', 'color': Colors.orange},
+    {'icon': Icons.cleaning_services, 'label': 'قيد التنفيذ', 'color': AppTheme.primaryGold},
+    {'icon': Icons.verified, 'label': 'تم والدفع!', 'color': AppTheme.successGreen},
   ];
 
   @override
@@ -324,9 +364,9 @@ class _PhoneJourneyMockupState extends State<_PhoneJourneyMockup>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Nazavly',
-                    style: const TextStyle(
+                  const Text(
+                    'دكتور كلينر',
+                    style: TextStyle(
                       color: AppTheme.primaryGold,
                       fontWeight: FontWeight.w700,
                       fontSize: 14,
@@ -418,13 +458,14 @@ class _Stage1Widget extends StatelessWidget {
                       color: AppTheme.primaryGold, size: 28),
                 ),
                 const SizedBox(height: 16),
-                const Text('Premium Service Booking',
+                const Text('حجز خدمة مميزة',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 14,
                         color: AppTheme.textDark)),
                 const SizedBox(height: 6),
-                Text('Professional services delivered to your door.',
+                Text('خدمات تنظيف احترافية تصل إلى بابك.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 11, color: AppTheme.textDark.withOpacity(0.5))),
@@ -440,12 +481,12 @@ class _Stage1Widget extends StatelessWidget {
             ),
             child: Column(
               children: [
-                _BookingRow(icon: Icons.bed, label: 'Rooms', value: '2'),
+                const _BookingRow(icon: Icons.bed, label: 'الغرف', value: '2'),
                 const SizedBox(height: 8),
-                _BookingRow(
+                const _BookingRow(
                     icon: Icons.location_on,
-                    label: 'Location',
-                    value: 'Maadi, Cairo'),
+                    label: 'الموقع',
+                    value: 'المعادي، القاهرة'),
                 const SizedBox(height: 12),
                 Container(
                   width: double.infinity,
@@ -454,7 +495,7 @@ class _Stage1Widget extends StatelessWidget {
                     color: AppTheme.primaryGold,
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Text('Request Service',
+                  child: const Text('طلب الخدمة',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppTheme.textDark,
@@ -603,13 +644,15 @@ class _Stage2WidgetState extends State<_Stage2Widget>
             ),
             child: Column(
               children: [
-                const Text('Searching for available workers...',
+                const Text('جاري البحث عن عمال متاحين...',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 13,
                         color: AppTheme.textDark)),
                 const SizedBox(height: 4),
-                Text('12 professionals nearby',
+                Text('12 محترفاً بالقرب منك',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 11,
                         color: AppTheme.textDark.withOpacity(0.5))),
@@ -680,13 +723,13 @@ class _Stage3Widget extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('NEW MATCH',
+                    Text('تطابق جديد',
                         style: TextStyle(
                             fontSize: 9,
                             fontWeight: FontWeight.w700,
                             color: AppTheme.textDark.withOpacity(0.5),
                             letterSpacing: 1)),
-                    const Text('Accept for instant service!',
+                    const Text('اقبل للخدمة الفورية!',
                         style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
@@ -714,7 +757,7 @@ class _Stage3Widget extends StatelessWidget {
                       color: AppTheme.primaryGold, size: 36),
                 ),
                 const SizedBox(height: 12),
-                const Text('Ahmed Mohamed',
+                const Text('أحمد محمد',
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 15,
@@ -731,7 +774,7 @@ class _Stage3Widget extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                             fontSize: 12,
                             color: AppTheme.textDark)),
-                    Text(' (250+ reviews)',
+                    Text(' (أكثر من 250 تقييم)',
                         style: TextStyle(
                             fontSize: 10,
                             color: AppTheme.textDark.withOpacity(0.4))),
@@ -745,7 +788,7 @@ class _Stage3Widget extends StatelessWidget {
                     color: AppTheme.successGreen,
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Text('Accept',
+                  child: const Text('قبول',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
@@ -834,9 +877,9 @@ class _Stage4WidgetState extends State<_Stage4Widget> {
             ),
             child: Row(
               children: [
-                _InfoBox(label: 'ETA', value: '8 min'),
+                const _InfoBox(label: 'وقت الوصول', value: '8 دقائق'),
                 const SizedBox(width: 12),
-                _InfoBox(label: 'Distance', value: '1.2 km', isGold: true),
+                const _InfoBox(label: 'المسافة', value: '1.2 كم', isGold: true),
               ],
             ),
           ),
@@ -865,7 +908,7 @@ class _InfoBox extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(label.toUpperCase(),
+            Text(label,
                 style: TextStyle(
                     fontSize: 9,
                     fontWeight: FontWeight.w700,
@@ -968,7 +1011,7 @@ class _Stage5WidgetState extends State<_Stage5Widget> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Ahmed Mohamed',
+                    const Text('أحمد محمد',
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 12,
@@ -984,7 +1027,7 @@ class _Stage5WidgetState extends State<_Stage5Widget> {
                           ),
                         ),
                         const SizedBox(width: 4),
-                        Text('Worker arrived',
+                        const Text('وصل العامل',
                             style: TextStyle(
                                 fontSize: 10,
                                 color: AppTheme.successGreen)),
@@ -1009,7 +1052,8 @@ class _Stage5WidgetState extends State<_Stage5Widget> {
               ),
             ),
             child: const Text(
-              'Hello! Starting the service now.',
+              'مرحباً! سأبدأ الخدمة الآن.',
+              textAlign: TextAlign.right,
               style: TextStyle(fontSize: 11, color: AppTheme.textDark),
             ),
           ).animate().fadeIn().slideX(begin: 0.2),
@@ -1029,7 +1073,8 @@ class _Stage5WidgetState extends State<_Stage5Widget> {
                   ),
                 ),
                 child: const Text(
-                  'Great, thank you!',
+                  'ممتاز، شكراً لك!',
+                  textAlign: TextAlign.right,
                   style: TextStyle(fontSize: 11, color: AppTheme.textDark),
                 ),
               ).animate().fadeIn().slideX(begin: -0.2),
@@ -1042,11 +1087,11 @@ class _Stage5WidgetState extends State<_Stage5Widget> {
             builder: (_, __) => Column(
               children: [
                 _ProgressBar(
-                    label: 'Initial Cleaning',
+                    label: 'تنظيف أولي',
                     progress: widget.controller.value.clamp(0.0, 1.0)),
                 const SizedBox(height: 8),
                 _ProgressBar(
-                    label: 'Deep Cleaning',
+                    label: 'تنظيف عميق',
                     progress: ((widget.controller.value - 0.5) * 2)
                         .clamp(0.0, 1.0)),
               ],
@@ -1131,13 +1176,15 @@ class _Stage6Widget extends StatelessWidget {
                 color: AppTheme.successGreen, size: 36),
           ).animate().scale(delay: 100.ms),
           const SizedBox(height: 16),
-          const Text('Service Complete!',
+          const Text('اكتملت الخدمة!',
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
                   color: AppTheme.textDark)),
           const SizedBox(height: 6),
-          Text('How was your experience?',
+          Text('كيف كانت تجربتك؟',
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 11, color: AppTheme.textDark.withOpacity(0.5))),
           const SizedBox(height: 16),
@@ -1164,7 +1211,7 @@ class _Stage6Widget extends StatelessWidget {
               children: const [
                 Icon(Icons.check_circle, color: Colors.white, size: 16),
                 SizedBox(width: 6),
-                Text('Payment Successful',
+                Text('تم الدفع بنجاح',
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,
@@ -1173,7 +1220,7 @@ class _Stage6Widget extends StatelessWidget {
             ),
           ).animate().fadeIn(delay: 400.ms),
           const SizedBox(height: 8),
-          Text('350 EGP — Thank you for using Nazavly!',
+          Text('350 ج.م — شكراً لاستخدامك دكتور كلينر!',
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 10, color: AppTheme.textDark.withOpacity(0.45))),

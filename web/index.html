@@ -1,46 +1,684 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
 
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="$FLUTTER_BASE_HREF">
-
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
-
-  <!-- iOS meta tags & icons -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="nazavly_erp">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>nazavly_erp</title>
-  <link rel="manifest" href="manifest.json">
+<html class="scroll-smooth" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<base href="/">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>دكتور كلينر | تنظيف احترافي على الطلب</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;family=Poppins:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-surface-variant": "#4d4632",
+                "primary": "#715c00",
+                "on-secondary-container": "#666464",
+                "secondary-fixed-dim": "#c9c6c5",
+                "outline": "#7f775f",
+                "secondary": "#605e5e",
+                "on-error": "#ffffff",
+                "secondary-fixed": "#e6e1e1",
+                "inverse-primary": "#ecc300",
+                "error": "#ba1a1a",
+                "primary-container": "#fcd000",
+                "primary-fixed": "#ffe17b",
+                "on-tertiary-fixed-variant": "#474746",
+                "on-secondary": "#ffffff",
+                "on-tertiary": "#ffffff",
+                "inverse-surface": "#35301f",
+                "on-tertiary-container": "#5c5b5a",
+                "surface": "#fff8ef",
+                "surface-container-low": "#fef3d8",
+                "surface-container": "#f8edd3",
+                "on-secondary-fixed-variant": "#484646",
+                "tertiary-fixed-dim": "#c8c6c5",
+                "secondary-container": "#e6e1e1",
+                "surface-dim": "#e3d9c0",
+                "background": "#fff8ef",
+                "on-surface": "#201b0b",
+                "on-primary-fixed": "#231b00",
+                "surface-container-high": "#f2e7cd",
+                "inverse-on-surface": "#fbf0d6",
+                "tertiary": "#5f5e5e",
+                "surface-container-lowest": "#ffffff",
+                "tertiary-fixed": "#e4e2e1",
+                "on-background": "#201b0b",
+                "error-container": "#ffdad6",
+                "primary-fixed-dim": "#ecc300",
+                "on-tertiary-fixed": "#1b1c1b",
+                "on-primary-container": "#6e5900",
+                "surface-bright": "#fff8ef",
+                "on-primary-fixed-variant": "#564500",
+                "on-secondary-fixed": "#1c1b1b",
+                "on-primary": "#ffffff",
+                "tertiary-container": "#d6d3d2",
+                "surface-variant": "#ece2c8",
+                "outline-variant": "#d0c6ab",
+                "surface-container-highest": "#ece2c8",
+                "on-error-container": "#93000a",
+                "surface-tint": "#715c00"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "12px",
+                "2xl": "24px",
+                "full": "9999px"
+            },
+            "spacing": {
+                "xl": "80px",
+                "lg": "48px",
+                "md": "24px",
+                "sm": "12px",
+                "xs": "4px",
+                "margin-desktop": "64px",
+                "gutter": "20px",
+                "base": "8px",
+                "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                "headline-md": ["Cairo"],
+                "body-lg": ["Cairo"],
+                "body-md": ["Cairo"],
+                "headline-xl": ["Cairo"],
+                "label-md": ["Poppins"],
+                "headline-lg": ["Cairo"],
+                "headline-lg-mobile": ["Cairo"],
+                "label-sm": ["Poppins"]
+            },
+            "fontSize": {
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-xl": ["40px", {"lineHeight": "52px", "fontWeight": "800"}],
+                "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .carousel-track {
+        display: flex;
+        transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      body {
+        background-color: #fff8ef;
+      }
+      @keyframes fade-up {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-up {
+        animation: fade-up 0.6s ease-out forwards;
+      }
+      .pricing-card-hover {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .pricing-card-hover:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      }
+      html { scroll-behavior: smooth; }
+      body { overflow-x: hidden; }
+      #hero-carousel { direction: ltr; }
+      .carousel-track > div { flex: 0 0 100%; min-width: 100%; }
+      .hero-slide-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+      @media (max-width: 767px) {
+        .pricing-card-hover:hover { transform: translateY(-4px); }
+        #pricing-grid .md\:scale-110 { transform: none !important; }
+      }
+      #stats-bar { flex-wrap: wrap; gap: 1.5rem; }
+      @media (max-width: 639px) {
+        #stats-bar { flex-direction: column; align-items: center; }
+        #stats-bar .w-px { display: none; }
+      }
+      #flutter-host { min-height: min(92vh, 920px) !important; }
+      @media (max-width: 767px) {
+        #flutter-host { min-height: 70vh !important; }
+      }
+    </style>
 </head>
-<body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
+<body class="font-body-md text-on-surface" id="dr-cleaner-landing"><script>
+  function goToAdmin() {
+    window.location.hash = '#/admin';
+    window.location.reload();
+  }
+  function applyAdminLayoutEarly() {
+    var admin = (window.location.hash || '').indexOf('admin') >= 0;
+    var shell = document.getElementById('landing-shell');
+    var below = document.getElementById('landing-below');
+    var host = document.getElementById('flutter-host');
+    if (shell) shell.style.display = admin ? 'none' : '';
+    if (below) below.style.display = admin ? 'none' : '';
+    if (host) host.style.display = admin ? 'none' : '';
+  }
+  document.addEventListener('DOMContentLoaded', applyAdminLayoutEarly);
+</script>
+<script src="landing_interactions.js" defer></script>
+<script src="landing_dynamic.js" defer></script>
+<div id="landing-shell">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-md shadow-sm h-20 flex flex-row-reverse justify-between items-center px-margin-mobile md:px-margin-desktop">
+<div class="flex items-center gap-md flex-row-reverse">
+<img alt="Dr Cleaner Logo" class="h-10 md:h-12 object-contain" src="data:image/png;base64,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JwF1IOV5XrVXSkAJKIGcE1AHknPEWoESUAJKoDwJlIIDKU/y2isloASUQIkTUAdS4idQm68ElIASKBQBdSCFIq/1KoFSIKBtVAJJCKgDSQJHs5SAElACSiAxAXUgidlojhJQAkpACSQhoA4kCZzxZ6kGJaAElED5ElAHUr7nVnumBJSAEsgpAXUgOcWrypWAEh/NZT8AAAE4SURBVCgUAa039wTUgeSesdagBJSAEihLAupAyvK0aqeUgBJQArknoA4k94xLswZttRJQAkogBQF1ICkAabYSUAJKQAnEJ6AOJD4XTVUCSkAJFIpAydSrDqRkTpU2VAkoASVQXATUgRTX+dDWKAEloARKhoA6kJI5VdrQdAmonBJQAvkhoA4kP5y1FiWgBJRA2RFQB1J2p1Q7pASUgBLID4FYB5KferUWJaAElIASKHEC6kBK/ARq85WAElAChSKgDqRQ5LVeJRBLQFOUQEkRUAdSUqdLG6sElIASKB4C6kCK51xoS5SAElACJUWgrBxISZHXxioBJaAESpyAOpASP4HafCWgBJRAoQioAykUea1XCZQVAe3MRCSgDmQinnXtsxJQAkogCwTUgWQBoqpQAkpACUxEAv8PAAD//yh2+akAAAAGSURBVAMAYRpZw01dqLkAAAAASUVORK5CYII="/>
+</div>
+<nav class="hidden md:flex flex-row-reverse gap-lg items-center" id="desktop-nav">
+<a class="text-primary font-bold border-b-2 border-primary text-label-md font-label-md transition-all" href="#features" data-scroll="features">الخدمات</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-label-md font-label-md" href="#how-it-works" data-scroll="how-it-works">كيف نعمل</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-label-md font-label-md" href="#pricing" data-scroll="pricing">الأسعار</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-label-md font-label-md" href="#testimonials" data-scroll="testimonials">قالوا عنا</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-label-md font-label-md" href="#booking" data-scroll="booking">احجز</a>
+</nav>
+<div class="flex items-center gap-sm flex-row-reverse">
+<button type="button" onclick="goToBooking()" class="bg-primary-container text-on-primary-fixed font-bold px-md py-sm rounded-xl hover:scale-95 transition-transform text-label-md">ابدأ الآن</button>
+<button type="button" class="text-on-surface-variant text-label-md font-label-md px-sm md:flex hidden" data-go-admin title="لوحة التحكم">Admin</button>
+<button type="button" class="md:hidden p-sm text-on-surface" onclick="toggleMobileNav()" aria-label="القائمة">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<div id="mobile-nav-backdrop" class="fixed inset-0 bg-on-surface/40 z-40 hidden md:hidden" onclick="toggleMobileNav()"></div>
+<aside id="mobile-nav" class="fixed top-0 right-0 h-full w-[min(100%,300px)] bg-surface z-50 shadow-2xl flex flex-col gap-sm p-lg translate-x-full transition-transform duration-300 md:hidden" aria-label="قائمة التنقل">
+<button type="button" class="self-end p-sm text-on-surface" onclick="toggleMobileNav()" aria-label="إغلاق"><span class="material-symbols-outlined">close</span></button>
+<a class="text-label-md font-bold py-sm border-b border-surface-variant" href="#features" data-scroll="features">الخدمات</a>
+<a class="text-label-md font-bold py-sm border-b border-surface-variant" href="#how-it-works" data-scroll="how-it-works">كيف نعمل</a>
+<a class="text-label-md font-bold py-sm border-b border-surface-variant" href="#pricing" data-scroll="pricing">الأسعار</a>
+<a class="text-label-md font-bold py-sm border-b border-surface-variant" href="#testimonials" data-scroll="testimonials">قالوا عنا</a>
+<a class="text-label-md font-bold py-sm border-b border-surface-variant" href="#booking" data-scroll="booking">احجز الآن</a>
+<button type="button" class="mt-md bg-primary-container text-on-primary-fixed font-bold py-md rounded-xl" onclick="goToBooking(); toggleMobileNav();">احجز خدمتك</button>
+<button type="button" class="text-primary text-label-sm py-sm" data-go-admin>لوحة التحكم</button>
+</aside>
+<main class="mt-20">
+<!-- Hero Carousel Section -->
+<section class="relative h-[min(85vh,600px)] sm:h-[600px] md:h-[768px] overflow-hidden" id="hero">
+<div class="carousel-track h-full" id="hero-carousel">
+<div class="min-w-full h-full relative">
+<img alt="خدمة تنظيف احترافية" class="hero-slide-img" fetchpriority="high" loading="eager" decoding="async" sizes="100vw" src="/hero/hero-1.png"/>
+</div>
+<div class="min-w-full h-full relative">
+<img alt="تنظيف المنازل والفيلات" class="hero-slide-img" loading="lazy" decoding="async" sizes="100vw" src="/hero/hero-2.png"/>
+</div>
+<div class="min-w-full h-full relative">
+<img alt="فريق عمل مصري محترف" class="hero-slide-img" loading="lazy" decoding="async" sizes="100vw" src="/hero/hero-3.png"/>
+</div>
+<div class="min-w-full h-full relative">
+<img alt="معايير جودة عالمية" class="hero-slide-img" loading="lazy" decoding="async" sizes="100vw" src="/hero/hero-4.png"/>
+</div>
+</div>
+<!-- Content Overlay (Right side prioritized for RTL) -->
+<div class="absolute inset-0 bg-gradient-to-l from-on-surface/60 via-on-surface/20 to-transparent flex items-end md:items-center pb-lg md:pb-0">
+<div class="container mx-auto px-margin-mobile md:px-margin-desktop text-right w-full max-w-4xl mr-0 ml-auto">
+<div class="glass-card p-md sm:p-lg rounded-2xl w-full max-w-2xl mx-auto md:mx-0 md:mr-0 md:ml-auto border border-white/20 shadow-2xl animate-fade-in-up">
+<h1 class="text-headline-lg-mobile md:text-headline-xl font-headline-xl text-on-surface mb-sm"><span id="hero-title-line1">تنظيف احترافي</span><br/><span class="text-primary" id="hero-title-highlight">على الطلب</span></h1>
+<p class="text-body-lg text-on-surface-variant mb-lg leading-relaxed" id="hero-subtitle">فريق مصري محترف مدرب على أعلى معايير الجودة العالمية. احجز خدمتك الآن بضغطة زر عبر تطبيقنا المتطور واستمتع بنظافة تفوق الخيال.</p>
+<div class="flex flex-col sm:flex-row-reverse gap-md">
+<button type="button" onclick="goToBooking()" class="bg-primary-container text-on-primary-fixed font-bold py-md px-xl rounded-xl text-headline-md flex items-center justify-center gap-sm hover:brightness-110 transition-all w-full sm:w-auto">
+<span class="material-symbols-outlined">calendar_month</span>
+                                احجز الآن
+                            </button>
+<button type="button" data-scroll-explore class="border-2 border-primary-container text-primary font-bold py-md px-xl rounded-xl text-headline-md hover:bg-primary-container/10 transition-all w-full sm:w-auto">
+                                اكتشف الخدمات
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Carousel Controls -->
+<div class="absolute bottom-md left-1/2 -translate-x-1/2 flex gap-sm z-10" id="hero-dots">
+<button class="w-3 h-3 rounded-full bg-primary-container carousel-dot flex items-center justify-center text-[10px] text-on-primary-fixed" onclick="slideHero(0)"></button>
+<button class="w-3 h-3 rounded-full bg-white/50 carousel-dot flex items-center justify-center text-[10px] text-on-primary-fixed" onclick="slideHero(1)"></button>
+<button class="w-3 h-3 rounded-full bg-white/50 carousel-dot flex items-center justify-center text-[10px] text-on-primary-fixed" onclick="slideHero(2)"></button>
+<button class="w-3 h-3 rounded-full bg-white/50 carousel-dot flex items-center justify-center text-[10px] text-on-primary-fixed" onclick="slideHero(3)">
+<span class="hidden md:inline absolute -top-8 bg-black/50 text-white px-2 py-1 rounded">مطار</span>
+</button>
+</div>
+</section>
+<!-- Stats Bar -->
+<section class="bg-white py-lg border-b border-surface-variant">
+<div class="container mx-auto px-margin-mobile flex flex-row-reverse justify-center gap-xl md:gap-32 text-center" id="stats-bar">
+<div>
+<h3 class="text-headline-lg font-headline-xl text-primary">+5000</h3>
+<p class="text-label-md font-label-md text-on-surface-variant">عميل سعيد</p>
+</div>
+<div class="w-px h-16 bg-surface-variant"></div>
+<div>
+<h3 class="text-headline-lg font-headline-xl text-primary">+120</h3>
+<p class="text-label-md font-label-md text-on-surface-variant">عامل محترف</p>
+</div>
+</div>
+</section>
+<!-- Features (The Gold Standard) -->
+<section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface" id="features">
+<div class="text-center mb-xl">
+<h2 class="text-headline-lg font-headline-xl mb-xs" id="features-title">المعيار الذهبي في كل تفصيلة</h2>
+<div class="w-24 h-1 bg-primary-container mx-auto"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-md" id="features-grid">
+<!-- Feature 1 -->
+<div class="bg-white p-lg rounded-2xl shadow-sm hover:shadow-md transition-all border border-surface-variant text-center">
+<div class="w-16 h-16 bg-primary-container/10 rounded-full flex items-center justify-center mx-auto mb-md">
+<span class="material-symbols-outlined text-primary text-4xl" data-weight="fill">bolt</span>
+</div>
+<h4 class="text-headline-md font-headline-md mb-sm">خدمة سريعة</h4>
+<p class="text-body-md text-on-surface-variant">نصلك في أسرع وقت ممكن مع الالتزام التام بالمواعيد المحددة.</p>
+</div>
+<!-- Feature 2 -->
+<div class="bg-white p-lg rounded-2xl shadow-sm hover:shadow-md transition-all border border-surface-variant text-center">
+<div class="w-16 h-16 bg-primary-container/10 rounded-full flex items-center justify-center mx-auto mb-md">
+<span class="material-symbols-outlined text-primary text-4xl" data-weight="fill">verified_user</span>
+</div>
+<h4 class="text-headline-md font-headline-md mb-sm">عمال موثوقين</h4>
+<p class="text-body-md text-on-surface-variant">جميع أفراد فريقنا يخضعون لفحوصات أمنية وتدريب مكثف لضمان أمانك.</p>
+</div>
+<!-- Feature 3 -->
+<div class="bg-white p-lg rounded-2xl shadow-sm hover:shadow-md transition-all border border-surface-variant text-center">
+<div class="w-16 h-16 bg-primary-container/10 rounded-full flex items-center justify-center mx-auto mb-md">
+<span class="material-symbols-outlined text-primary text-4xl" data-weight="fill">payments</span>
+</div>
+<h4 class="text-headline-md font-headline-md mb-sm">أسعار شفافة</h4>
+<p class="text-body-md text-on-surface-variant">لا توجد رسوم خفية. أسعارنا واضحة ومحددة مسبقاً حسب الخدمة.</p>
+</div>
+<!-- Feature 4 -->
+<div class="bg-white p-lg rounded-2xl shadow-sm hover:shadow-md transition-all border border-surface-variant text-center">
+<div class="w-16 h-16 bg-primary-container/10 rounded-full flex items-center justify-center mx-auto mb-md">
+<span class="material-symbols-outlined text-primary text-4xl" data-weight="fill">support_agent</span>
+</div>
+<h4 class="text-headline-md font-headline-md mb-sm">دعم 24/7</h4>
+<p class="text-body-md text-on-surface-variant">فريق خدمة العملاء متاح دائماً للرد على استفساراتكم وحل مشكلاتكم.</p>
+</div>
+</div>
+</section>
+<!-- How it Works -->
+<section class="py-xl bg-white overflow-hidden" id="how-it-works">
+<div class="container mx-auto px-margin-mobile md:px-margin-desktop">
+<h2 class="text-headline-lg font-headline-xl text-center mb-xl">كيف تحصل على خدمة دكتور كلينر؟</h2>
+<div class="relative">
+<!-- Connector Lines (Desktop) -->
+<div class="hidden lg:block absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-dashed border-t-2 border-dashed border-primary-container -z-10"></div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-xl relative z-10">
+<div class="flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full bg-primary-container text-on-primary-fixed flex items-center justify-center text-headline-lg font-bold mb-md shadow-lg">1</div>
+<h4 class="text-headline-md font-headline-md mb-xs">حمّل التطبيق</h4>
+<p class="text-body-md text-on-surface-variant max-w-xs">متوفر على أندرويد وآيفون، سجل بياناتك في أقل من دقيقة.</p>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full bg-primary-container text-on-primary-fixed flex items-center justify-center text-headline-lg font-bold mb-md shadow-lg">2</div>
+<h4 class="text-headline-md font-headline-md mb-xs">اختر الخدمة</h4>
+<p class="text-body-md text-on-surface-variant max-w-xs">حدد الموعد والموقع ونوع التنظيف الذي تحتاجه بدقة.</p>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full bg-primary-container text-on-primary-fixed flex items-center justify-center text-headline-lg font-bold mb-md shadow-lg">3</div>
+<h4 class="text-headline-md font-headline-md mb-xs">استمتع بالنظافة</h4>
+<p class="text-body-md text-on-surface-variant max-w-xs">سيقوم فريقنا بالمهمة بينما تسترخي وتستمتع ببيئة نظيفة.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
 
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
-  <script src="flutter_bootstrap.js" async></script>
-</body>
-</html>
+</div><!-- /landing-shell -->
+<div id="landing-below">
+<!-- Flutter embed: renders body > flutter-view inside #flutter-host -->
+<section id="service-journey" class="w-full bg-[#111214]">
+  <div id="flutter-host" style="width:100%;min-height:920px;"></div>
+</section>
+<!-- Pricing Section -->
+<section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface-container-low" id="pricing">
+<div class="text-center mb-xl">
+<h2 class="text-headline-lg font-headline-xl mb-xs" id="pricing-title">خطط الأسعار المناسبة لك</h2>
+<p class="text-body-lg text-on-surface-variant" id="pricing-subtitle">باقات مرنة صممت لتناسب جميع احتياجاتك السكنية والتجارية</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 max-w-6xl gap-lg mx-auto" id="pricing-grid">
+<!-- Basic Card -->
+<div class="animate-fade-up bg-white p-lg rounded-2xl border border-surface-variant flex flex-col items-center text-center pricing-card-hover" style="animation-delay: 0.1s;">
+<h3 class="text-headline-md font-bold mb-sm">الباقة الأساسية</h3>
+<div class="flex items-baseline gap-xs mb-md">
+<span class="text-headline-xl font-bold text-primary">1200</span>
+<span class="text-label-md font-label-md text-on-surface-variant">ج.م</span>
+</div>
+<ul class="space-y-sm text-right w-full mb-xl">
+<li class="flex items-center gap-sm flex-row-reverse">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            تنظيف الغرف الرئيسية
+                        </li>
+<li class="flex items-center gap-sm flex-row-reverse">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            مسح الأرضيات
+                        </li>
+<li class="flex items-center gap-sm flex-row-reverse">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            تنظيف المطبخ السطحي
+                        </li>
+</ul>
+<button type="button" data-book-package="basic" class="w-full py-md rounded-xl border-2 border-primary-container text-primary font-bold hover:bg-primary-container/10 transition-all mt-auto">اطلب الآن</button>
+</div>
+<!-- Villa Card (Featured) -->
+<div class="animate-fade-up bg-primary-container p-lg rounded-2xl flex flex-col items-center text-center shadow-xl md:scale-110 max-md:scale-100 relative z-10 overflow-hidden group pricing-card-hover" style="animation-delay: 0.3s;">
+<span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-on-surface text-surface text-label-md px-md py-xs rounded-full font-bold whitespace-nowrap">الأكثر طلباً</span>
+<h3 class="text-headline-md font-bold mb-sm text-on-primary-fixed mt-sm">باقة الفيلات</h3>
+<div class="flex items-baseline gap-xs mb-md text-on-primary-fixed">
+<span class="text-headline-xl font-bold">2400</span>
+<span class="text-label-md font-label-md">ج.م</span>
+</div>
+<ul class="space-y-sm text-right w-full mb-xl text-on-primary-fixed">
+<li class="flex items-center gap-sm flex-row-reverse">
+<span class="material-symbols-outlined text-on-primary-fixed" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            تنظيف عميق لجميع الغرف
+                        </li>
+<li class="flex items-center gap-sm flex-row-reverse">
+<span class="material-symbols-outlined text-on-primary-fixed" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            تلميع المقتنيات الثمينة
+                        </li>
+<li class="flex items-center gap-sm flex-row-reverse">
+<span class="material-symbols-outlined text-on-primary-fixed" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            تعقيم الحمامات والمطابخ
+                        </li>
+<li class="flex items-center gap-sm flex-row-reverse">
+<span class="material-symbols-outlined text-on-primary-fixed" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            تعطير المكان بروائح فاخرة
+                        </li>
+</ul>
+<button type="button" data-book-package="villa" class="w-full py-md rounded-xl bg-on-primary-fixed text-primary-container font-bold hover:opacity-90 transition-all mt-auto">اطلب الآن</button>
+</div>
+<!-- Royal Card -->
+<div class="animate-fade-up bg-white p-lg rounded-2xl border border-surface-variant flex flex-col items-center text-center pricing-card-hover" style="animation-delay: 0.5s;">
+<h3 class="text-headline-md font-bold mb-sm">الباقة الملكية</h3>
+<div class="flex items-baseline gap-xs mb-md">
+<span class="text-headline-xl font-bold text-primary">4500</span>
+<span class="text-label-md font-label-md text-on-surface-variant">ج.م</span>
+</div>
+<ul class="space-y-sm text-right w-full mb-xl">
+<li class="flex items-center gap-sm flex-row-reverse">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            تنظيف شامل (الواجهات والحدائق)
+                        </li>
+<li class="flex items-center gap-sm flex-row-reverse">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            غسيل السجاد والستائر بالبخار
+                        </li>
+<li class="flex items-center gap-sm flex-row-reverse">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            فريق مخصص من 4 أفراد
+                        </li>
+</ul>
+<button type="button" data-book-package="royal" class="w-full py-md rounded-xl border-2 border-primary-container text-primary font-bold hover:bg-primary-container/10 transition-all mt-auto">اطلب الآن</button>
+</div>
+</div>
+</section>
+<!-- Booking Form Section -->
+<section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface" id="booking">
+<div class="max-w-4xl mx-auto">
+<div class="bg-white p-lg md:p-xl rounded-2xl shadow-xl border border-surface-variant">
+<div class="text-center mb-xl">
+<h2 class="text-headline-lg font-headline-xl mb-xs" id="booking-title">احجز خدمتك الآن</h2>
+<div class="w-24 h-1 bg-primary-container mx-auto"></div>
+<p class="mt-md text-on-surface-variant" id="booking-subtitle">سجل بياناتك وسنتواصل معك لتأكيد الموعد</p>
+</div>
+<form class="space-y-lg" id="bookingForm">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="text-label-md font-bold text-on-surface" for="name">الاسم بالكامل</label>
+<input class="w-full p-md border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary-container focus:border-primary-container bg-surface-container-lowest outline-none transition-all" id="name" placeholder="أدخل اسمك" required="" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="text-label-md font-bold text-on-surface" for="phone">رقم الهاتف</label>
+<input class="w-full p-md border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary-container focus:border-primary-container bg-surface-container-lowest outline-none transition-all" id="phone" placeholder="01xxxxxxxxx" required="" type="tel"/>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="text-label-md font-bold text-on-surface" for="service">نوع الخدمة</label>
+<select class="w-full p-md border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary-container focus:border-primary-container bg-surface-container-lowest outline-none transition-all appearance-none" id="service" required="">
+<option value="">اختر الباقة المناسبة</option>
+<option value="basic">الباقة الأساسية</option>
+<option value="villa">باقة الفيلات (الأكثر طلباً)</option>
+<option value="royal">الباقة الملكية</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="text-label-md font-bold text-on-surface" for="notes">ملاحظات إضافية</label>
+<textarea class="w-full p-md border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary-container focus:border-primary-container bg-surface-container-lowest outline-none transition-all min-h-[120px]" id="notes" placeholder="هل لديك أي طلبات خاصة؟"></textarea>
+</div>
+<div class="pt-md">
+<button class="w-full bg-primary-container text-on-primary-fixed font-bold py-md rounded-xl text-headline-md shadow-lg hover:brightness-105 transition-all flex items-center justify-center gap-sm" type="submit">
+<span class="material-symbols-outlined">send</span>
+                            إرسال الطلب
+                        </button>
+</div>
+</form>
+<!-- Success Message (Hidden by default) -->
+<div class="hidden text-center py-xl" id="successState">
+<div class="w-20 h-20 bg-primary-container/20 rounded-full flex items-center justify-center mx-auto mb-md">
+<span class="material-symbols-outlined text-primary text-5xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h3 class="text-headline-md font-bold mb-sm">تم استلام طلبك بنجاح!</h3>
+<p class="text-on-surface-variant">شكراً لاختيارك دكتور كلينر. سيقوم فريقنا بالتواصل معك في أقرب وقت ممكن لتأكيد الحجز.</p>
+<button class="mt-lg text-primary font-bold underline" onclick="resetForm()">إرسال طلب آخر</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-xl px-margin-mobile md:px-margin-desktop bg-white overflow-hidden" id="testimonials">
+<h2 class="text-headline-lg font-headline-xl text-center mb-xl" id="testimonials-title">آراء عملاء دكتور كلينر</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md" id="testimonials-grid">
+<!-- Testimonial 1 -->
+<div class="bg-surface-container-lowest p-lg rounded-2xl border border-surface-variant relative">
+<div class="flex flex-row-reverse gap-xs mb-md">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-body-md text-on-surface mb-lg italic leading-relaxed">"تجربة رائعة بكل المقاييس. الفريق كان محترف جداً ومنظم، والنتيجة كانت مذهلة فعلاً. البيت رجع كأنه جديد."</p>
+<div class="flex items-center gap-md flex-row-reverse">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center font-bold text-primary">أ</div>
+<div class="text-right">
+<h5 class="font-bold">أحمد صالح</h5>
+<p class="text-label-sm text-on-surface-variant">الشيخ زايد</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 2 -->
+<div class="bg-surface-container-lowest p-lg rounded-2xl border border-surface-variant relative">
+<div class="flex flex-row-reverse gap-xs mb-md">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-body-md text-on-surface mb-lg italic leading-relaxed">"أهم حاجة عجبتني هي الأمانة والدقة في المواعيد. والأسعار فعلاً منطقية جداً مقابل الخدمة اللي استلمتها."</p>
+<div class="flex items-center gap-md flex-row-reverse">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center font-bold text-primary">س</div>
+<div class="text-right">
+<h5 class="font-bold">سارة خالد</h5>
+<p class="text-label-sm text-on-surface-variant">التجمع الخامس</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 3 -->
+<div class="bg-surface-container-lowest p-lg rounded-2xl border border-surface-variant relative">
+<div class="flex flex-row-reverse gap-xs mb-md">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-body-md text-on-surface mb-lg italic leading-relaxed">"تطبيق سهل الاستخدام جداً وخدمة العملاء بتتابع معاك خطوة بخطوة. أنصح بيهم أي حد بيدور على راحة البال."</p>
+<div class="flex items-center gap-md flex-row-reverse">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center font-bold text-primary">م</div>
+<div class="text-right">
+<h5 class="font-bold">محمد علي</h5>
+<p class="text-label-sm text-on-surface-variant">مدينة نصر</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-xl bg-primary-container px-margin-mobile">
+<div class="container mx-auto text-center">
+<h2 class="text-headline-lg md:text-headline-xl font-headline-xl text-on-primary-fixed mb-md" id="cta-title">جاهز لتجربة مستوى جديد من النظافة؟</h2>
+<p class="text-body-lg text-on-primary-fixed-variant mb-xl max-w-2xl mx-auto" id="cta-subtitle">انضم لأكثر من 5000 عميل سعيد في مصر واستمتع بمنزل مشرق وصحي دائماً.</p>
+<div class="flex flex-col sm:flex-row-reverse justify-center gap-md">
+<button type="button" onclick="goToBooking()" class="bg-on-primary-fixed text-primary-container font-bold py-md px-xl rounded-xl text-headline-md shadow-lg flex items-center justify-center gap-sm w-full sm:w-auto">
+<span class="material-symbols-outlined">calendar_month</span>
+                        احجز الآن
+                    </button>
+<button type="button" data-contact class="bg-white text-on-surface font-bold py-md px-xl rounded-xl text-headline-md shadow-lg w-full sm:w-auto">تواصل مع المبيعات</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-lg px-margin-desktop bg-surface-container-lowest border-t border-outline-variant">
+<div class="flex flex-col md:flex-row-reverse justify-between items-start gap-md w-full">
+<div class="flex flex-col items-start md:items-end gap-sm text-right">
+<h3 class="text-headline-md font-headline-md font-bold text-primary">دكتور كلينر</h3>
+<p class="text-on-tertiary-container max-w-xs">شريكك الموثوق للنظافة الاحترافية في جميع أنحاء الجمهورية. جودة تستحقها وأمان نضمنه لك.</p>
+<div class="flex gap-sm mt-sm">
+<a class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-primary-container transition-all" href="#">
+<span class="material-symbols-outlined text-primary">face_nod</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-primary-container transition-all" href="#">
+<span class="material-symbols-outlined text-primary">camera_alt</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-primary-container transition-all" href="#">
+<span class="material-symbols-outlined text-primary">share</span>
+</a>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-xl text-right">
+<div>
+<h5 class="text-headline-sm font-headline-md mb-md text-primary">الروابط</h5>
+<ul class="space-y-sm text-label-sm font-label-sm text-on-tertiary-container">
+<li><a class="hover:text-primary-container transition-all" href="#features" data-scroll="features">الخدمات</a></li>
+<li><a class="hover:text-primary-container transition-all" href="#booking" data-scroll="booking">احجز الآن</a></li>
+<li><a class="hover:text-primary-container transition-all" href="#pricing" data-scroll="pricing">الأسعار</a></li>
+<li><a class="hover:text-primary-container transition-all" href="#how-it-works" data-scroll="how-it-works">كيف نعمل</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-headline-sm font-headline-md mb-md text-primary">اتصل بنا</h5>
+<ul class="space-y-sm text-label-sm font-label-sm text-on-tertiary-container">
+<li class="flex items-center gap-xs flex-row-reverse">
+<span class="material-symbols-outlined text-primary text-sm">phone_iphone</span>
+                            19000
+                        </li>
+<li class="flex items-center gap-xs flex-row-reverse">
+<span class="material-symbols-outlined text-primary text-sm">mail</span>
+                            info@drcleaner.eg
+                        </li>
+<li class="flex items-center gap-xs flex-row-reverse">
+<span class="material-symbols-outlined text-primary text-sm">location_on</span>
+                            القاهرة، مصر
+                        </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="mt-xl pt-md border-t border-surface-variant flex flex-col md:flex-row-reverse justify-between items-center gap-md text-label-sm text-on-tertiary-container">
+<p>© 2024 دكتور كلينر. جميع الحقوق محفوظة</p>
+<div class="flex gap-md">
+<img alt="Google Play" class="h-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_NU3ThORLjUTAGsMCqhv2acWJxGSZIM-AR568tCaesAjk4OBp_vIIYNGHe_3zy-YyaBaMXftxfO8fYX6faXteL2F4730oBRymZ97zRZtMnxq5h2MwP8GzdgEaBe532tAYcE1jWFWhSgesaYPzghKUc2p4TVRXdKMVNACdKNzy2OWRKDkjsY1JtDjAU4tQ5EFl_AcXt8qeE6ZDycv2EMEfiGLJE1mQtcp2DTQZYeIYCuUH-IIXDk-usMHwcVmGzxuOX3HrL59T20Y"/>
+<img alt="App Store" class="h-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAROih3PR2Vm61Z1Wq9-Zalf8ZVT-VPKNq8A6yCUwgB5shZ1Lz0tUzNLHVpB_gr6IDK937mJo7-p53p2zSU6JNsTRr8CvVDewYT_vxnF1KM6IMwBVlFhCVBn-SkeTMlho11RV19TNZ0AVdvMtCFrq2VX0Fsw6kxC7m90gk9UsESAxjHP7VjzYE-qnFocyZsbM1KVmFNKHBmshJxgUrSPiW1JiYzlJV5t0EjabzzSyOSxOOXTBBjAC_bRFSVZSqugdfe2sV93EP4RmE"/>
+</div>
+</div>
+</footer>
+</div><!-- /landing-below -->
+<script>
+        let currentSlide = 0;
+        function getTotalSlides() {
+            return window.__heroSlideCount || 4;
+        }
+        const track = document.getElementById('hero-carousel');
+
+        function slideHero(index) {
+            currentSlide = index;
+            const offset = index * 100;
+            if (track) track.style.transform = 'translateX(-' + offset + '%)';
+            
+            document.querySelectorAll('#hero-dots .carousel-dot').forEach((dot, i) => {
+                if(i === index) {
+                    dot.classList.remove('bg-white/50');
+                    dot.classList.add('bg-primary-container');
+                } else {
+                    dot.classList.remove('bg-primary-container');
+                    dot.classList.add('bg-white/50');
+                }
+            });
+        }
+
+        // Auto slide
+        let slideInterval = setInterval(() => {
+            currentSlide = (currentSlide + 1) % getTotalSlides();
+            slideHero(currentSlide);
+        }, 5000);
+
+        // Pause on dot click and restart
+        document.getElementById('hero-dots')?.addEventListener('click', function(e) {
+            if (!e.target.closest('.carousel-dot')) return;
+                clearInterval(slideInterval);
+                slideInterval = setInterval(() => {
+                    currentSlide = (currentSlide + 1) % getTotalSlides();
+                    slideHero(currentSlide);
+                }, 5000);
+        });
+
+        // Booking Form Handling
+        const bookingForm = document.getElementById('bookingForm');
+        const successState = document.getElementById('successState');
+
+                bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var payload = {
+              name: document.getElementById('name').value,
+              phone: document.getElementById('phone').value,
+              service: document.getElementById('service').selectedOptions[0].text,
+              notes: document.getElementById('notes').value
+            };
+            try { localStorage.setItem('dr_cleaner_booking', JSON.stringify(payload)); } catch (err) {}
+            bookingForm.classList.add('hidden');
+            successState.classList.remove('hidden');
+            document.querySelector('#booking .text-center.mb-xl').classList.add('hidden');
+            setTimeout(function() { goToAdmin(); }, 1200);
+        });
+
+        function resetForm() {
+            bookingForm.reset();
+            bookingForm.classList.remove('hidden');
+            successState.classList.add('hidden');
+            document.querySelector('#booking .text-center.mb-xl').classList.remove('hidden');
+        }
+    </script>
+  <script src="flutter_bootstrap.js" defer></script>
+</body></html>
