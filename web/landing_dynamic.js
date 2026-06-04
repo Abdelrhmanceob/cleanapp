@@ -213,56 +213,45 @@
           .map(function (line) {
             return (
               '<li class="flex items-center gap-sm flex-row-reverse">' +
-              '<span class="material-symbols-outlined ' +
-              (featured ? 'text-on-primary-fixed' : 'text-primary') +
-              '" style="font-variation-settings: \'FILL\' 1;">check_circle</span>' +
+              '<span class="material-symbols-outlined text-on-primary-fixed" style="font-variation-settings: \'FILL\' 1;">check_circle</span>' +
               esc(line) +
               '</li>'
             );
           })
           .join('');
 
+        var cardClass =
+          'animate-fade-up bg-primary-container p-lg rounded-2xl flex flex-col items-center text-center shadow-lg relative overflow-hidden group pricing-card-hover';
         if (featured) {
-          return (
-            '<div class="animate-fade-up bg-primary-container p-lg rounded-2xl flex flex-col items-center text-center shadow-xl md:scale-110 max-md:scale-100 relative z-10 overflow-hidden group pricing-card-hover" style="animation-delay: ' +
-            delay +
-            's;">' +
-            '<span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-on-surface text-surface text-label-md px-md py-xs rounded-full font-bold whitespace-nowrap">الأكثر طلباً</span>' +
-            '<h3 class="text-headline-md font-bold mb-sm text-on-primary-fixed mt-sm">' +
-            esc(pkg.name) +
-            '</h3>' +
-            '<div class="flex items-baseline gap-xs mb-md text-on-primary-fixed">' +
-            '<span class="text-headline-xl font-bold">' +
-            esc(String(pkg.price)) +
-            '</span>' +
-            '<span class="text-label-md font-label-md">ج.م</span></div>' +
-            '<ul class="space-y-sm text-right w-full mb-xl text-on-primary-fixed">' +
-            featuresHtml +
-            '</ul>' +
-            '<button type="button" data-book-package="' +
-            esc(pkg.id) +
-            '" class="w-full py-md rounded-xl bg-on-primary-fixed text-primary-container font-bold hover:opacity-90 transition-all mt-auto">اطلب الآن</button></div>'
-          );
+          cardClass +=
+            ' md:scale-110 max-md:scale-100 z-10';
         }
 
         return (
-          '<div class="animate-fade-up bg-white p-lg rounded-2xl border border-surface-variant flex flex-col items-center text-center pricing-card-hover" style="animation-delay: ' +
+          '<div class="' +
+          cardClass +
+          '" style="animation-delay: ' +
           delay +
           's;">' +
-          '<h3 class="text-headline-md font-bold mb-sm">' +
+          (featured
+            ? '<span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-on-surface text-surface text-label-md px-md py-xs rounded-full font-bold whitespace-nowrap">الأكثر طلباً</span>'
+            : '') +
+          '<h3 class="text-headline-md font-bold mb-sm text-on-primary-fixed' +
+          (featured ? ' mt-sm' : '') +
+          '">' +
           esc(pkg.name) +
           '</h3>' +
-          '<div class="flex items-baseline gap-xs mb-md">' +
-          '<span class="text-headline-xl font-bold text-primary">' +
+          '<div class="flex items-baseline gap-xs mb-md text-on-primary-fixed">' +
+          '<span class="text-headline-xl font-bold">' +
           esc(String(pkg.price)) +
           '</span>' +
-          '<span class="text-label-md font-label-md text-on-surface-variant">ج.م</span></div>' +
-          '<ul class="space-y-sm text-right w-full mb-xl">' +
+          '<span class="text-label-md font-label-md">ج.م</span></div>' +
+          '<ul class="space-y-sm text-right w-full mb-xl text-on-primary-fixed">' +
           featuresHtml +
           '</ul>' +
           '<button type="button" data-book-package="' +
           esc(pkg.id) +
-          '" class="w-full py-md rounded-xl border-2 border-primary-container text-primary font-bold hover:bg-primary-container/10 transition-all mt-auto">اطلب الآن</button></div>'
+          '" class="w-full py-md rounded-xl bg-on-primary-fixed text-primary-container font-bold hover:opacity-90 transition-all mt-auto">اطلب الآن</button></div>'
         );
       })
       .join('');
