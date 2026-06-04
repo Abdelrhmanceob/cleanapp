@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/admin_layout.dart';
 import '../../core/admin_scope.dart';
 import '../../core/theme.dart';
 
@@ -14,21 +15,30 @@ class AnalyticsPage extends StatelessWidget {
         final completionRate = store.totalOrders == 0
             ? 0.0
             : store.completedCount / store.totalOrders;
+        final mobile = AdminLayout.isMobile(context);
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(32),
+          padding: AdminLayout.pagePadding(context),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Wrap(
                 spacing: 16,
                 runSpacing: 16,
                 children: [
-                  _StatCard('معدل الإكمال', '${(completionRate * 100).toStringAsFixed(0)}%'),
-                  _StatCard('طلبات قيد الانتظار', '${store.pendingCount}'),
-                  _StatCard('طلبات جارية', '${store.inProgressCount}'),
-                  _StatCard('متوسط الإيراد / طلب', store.completedCount == 0
-                      ? '—'
-                      : '${(store.revenueEgp / store.completedCount).round()} ج.م'),
+                  _StatCard(
+                    'معدل الإكمال',
+                    '${(completionRate * 100).toStringAsFixed(0)}%',
+                    fullWidth: mobile,
+                  ),
+                  _StatCard('طلبات قيد الانتظار', '${store.pendingCount}', fullWidth: mobile),
+                  _StatCard('طلبات جارية', '${store.inProgressCount}', fullWidth: mobile),
+                  _StatCard(
+                    'متوسط الإيراد / طلب',
+                    store.completedCount == 0
+                        ? '—'
+                        : '${(store.revenueEgp / store.completedCount).round()} ج.م',
+                    fullWidth: mobile,
+                  ),
                 ],
               ),
               const SizedBox(height: 32),
@@ -65,12 +75,13 @@ class AnalyticsPage extends StatelessWidget {
 class _StatCard extends StatelessWidget {
   final String title;
   final String value;
-  const _StatCard(this.title, this.value);
+  final bool fullWidth;
+  const _StatCard(this.title, this.value, {this.fullWidth = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
+      width: fullWidth ? double.infinity : 200,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,

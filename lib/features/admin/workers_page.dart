@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/admin_layout.dart';
 import '../../core/admin_scope.dart';
 import '../../core/admin_store.dart';
 import '../../core/theme.dart';
@@ -64,26 +65,40 @@ class _WorkersPageState extends State<WorkersPage> {
     return ListenableBuilder(
       listenable: store,
       builder: (context, _) {
+        final mobile = AdminLayout.isMobile(context);
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(32),
+          padding: AdminLayout.pagePadding(context),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                children: [
-                  Text(
-                    '${store.workers.length} عامل مسجّل',
-                    style: const TextStyle(fontSize: 16, color: AppTheme.textMuted),
-                  ),
-                  const Spacer(),
-                  FilledButton.icon(
-                    onPressed: () => _showAddDialog(store),
-                    icon: const Icon(Icons.add),
-                    label: const Text('إضافة عامل'),
-                    style: FilledButton.styleFrom(backgroundColor: AppTheme.primaryGold),
-                  ),
-                ],
-              ),
+              if (mobile) ...[
+                Text(
+                  '${store.workers.length} عامل مسجّل',
+                  style: const TextStyle(fontSize: 16, color: AppTheme.textMuted),
+                ),
+                const SizedBox(height: 12),
+                FilledButton.icon(
+                  onPressed: () => _showAddDialog(store),
+                  icon: const Icon(Icons.add),
+                  label: const Text('إضافة عامل'),
+                  style: FilledButton.styleFrom(backgroundColor: AppTheme.primaryGold),
+                ),
+              ] else
+                Row(
+                  children: [
+                    Text(
+                      '${store.workers.length} عامل مسجّل',
+                      style: const TextStyle(fontSize: 16, color: AppTheme.textMuted),
+                    ),
+                    const Spacer(),
+                    FilledButton.icon(
+                      onPressed: () => _showAddDialog(store),
+                      icon: const Icon(Icons.add),
+                      label: const Text('إضافة عامل'),
+                      style: FilledButton.styleFrom(backgroundColor: AppTheme.primaryGold),
+                    ),
+                  ],
+                ),
               const SizedBox(height: 20),
               ...store.workers.map((w) => _WorkerCard(worker: w, store: store)),
             ],
@@ -101,6 +116,43 @@ class _WorkerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mobile = AdminLayout.isMobile(context);
+    final avatar = CircleAvatar(
+      backgroundColor: worker.active ? AppTheme.primaryGold : Colors.grey.shade300,
+      child: Text(
+        worker.name.isNotEmpty ? worker.name[0] : '?',
+        style: const TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textDark),
+      ),
+    );
+    final info = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(worker.name, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+        Text(worker.specialty, style: const TextStyle(color: AppTheme.textMuted, fontSize: 13)),
+        Text(worker.phone, style: const TextStyle(color: AppTheme.textMuted, fontSize: 12)),
+      ],
+    );
+    final statusChip = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: (worker.active ? const Color(0xFF2D8E5B) : AppTheme.textMuted).withOpacity(0.12),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        worker.active ? 'نشط' : 'غير نشط',
+        style: TextStyle(
+          color: worker.active ? const Color(0xFF2D8E5B) : AppTheme.textMuted,
+          fontWeight: FontWeight.w600,
+          fontSize: 12,
+        ),
+      ),
+    );
+    final toggle = Switch(
+      value: worker.active,
+      activeColor: AppTheme.primaryGold,
+      onChanged: (_) => store.toggleWorkerActive(worker.id),
+    );
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(20),
@@ -109,48 +161,34 @@ class _WorkerCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppTheme.borderSubtle),
       ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundColor: worker.active ? AppTheme.primaryGold : Colors.grey.shade300,
-            child: Text(
-              worker.name.isNotEmpty ? worker.name[0] : '?',
-              style: const TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textDark),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: mobile
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(worker.name, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-                Text(worker.specialty, style: const TextStyle(color: AppTheme.textMuted, fontSize: 13)),
-                Text(worker.phone, style: const TextStyle(color: AppTheme.textMuted, fontSize: 12)),
+                Row(
+                  children: [
+                    avatar,
+                    const SizedBox(width: 16),
+                    Expanded(child: info),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [statusChip, toggle],
+                ),
+              ],
+            )
+          : Row(
+              children: [
+                avatar,
+                const SizedBox(width: 16),
+                Expanded(child: info),
+                toggle,
+                const SizedBox(width: 8),
+                statusChip,
               ],
             ),
-          ),
-          Switch(
-            value: worker.active,
-            activeColor: AppTheme.primaryGold,
-            onChanged: (_) => store.toggleWorkerActive(worker.id),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: (worker.active ? const Color(0xFF2D8E5B) : AppTheme.textMuted).withOpacity(0.12),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              worker.active ? 'نشط' : 'غير نشط',
-              style: TextStyle(
-                color: worker.active ? const Color(0xFF2D8E5B) : AppTheme.textMuted,
-                fontWeight: FontWeight.w600,
-                fontSize: 12,
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/admin_layout.dart';
 import '../../core/landing_scope.dart';
 import '../../core/landing_store.dart';
 import '../../core/theme.dart';
@@ -42,40 +43,63 @@ class _LandingContentPageState extends State<LandingContentPage> {
 
   @override
   Widget build(BuildContext context) {
+    final mobile = AdminLayout.isMobile(context);
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(32),
+      padding: AdminLayout.pagePadding(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              const Expanded(
-                child: Text(
-                  'تحرير صفحة الهبوط',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: AppTheme.textDark,
-                  ),
-                ),
-              ),
-              OutlinedButton(
-                onPressed: () {
-                  _markDirty(() => _draft = LandingContent.defaults());
-                },
-                child: const Text('استعادة الافتراضي'),
-              ),
-              const SizedBox(width: 12),
-              FilledButton(
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppTheme.primaryGold,
-                  foregroundColor: AppTheme.textDark,
-                ),
-                onPressed: () => _save(context),
-                child: const Text('حفظ ونشر'),
-              ),
-            ],
+          const Text(
+            'تحرير صفحة الهبوط',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: AppTheme.textDark,
+            ),
           ),
+          const SizedBox(height: 12),
+          if (mobile)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                OutlinedButton(
+                  onPressed: () {
+                    _markDirty(() => _draft = LandingContent.defaults());
+                  },
+                  child: const Text('استعادة الافتراضي'),
+                ),
+                const SizedBox(height: 8),
+                FilledButton(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppTheme.primaryGold,
+                    foregroundColor: AppTheme.textDark,
+                  ),
+                  onPressed: () => _save(context),
+                  child: const Text('حفظ ونشر'),
+                ),
+              ],
+            )
+          else
+            Row(
+              children: [
+                const Spacer(),
+                OutlinedButton(
+                  onPressed: () {
+                    _markDirty(() => _draft = LandingContent.defaults());
+                  },
+                  child: const Text('استعادة الافتراضي'),
+                ),
+                const SizedBox(width: 12),
+                FilledButton(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppTheme.primaryGold,
+                    foregroundColor: AppTheme.textDark,
+                  ),
+                  onPressed: () => _save(context),
+                  child: const Text('حفظ ونشر'),
+                ),
+              ],
+            ),
           const SizedBox(height: 8),
           const Text(
             'التغييرات تُحفظ محلياً وتظهر فوراً على الموقع الرئيسي.',
@@ -447,8 +471,9 @@ class _CardShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final compact = AdminLayout.isMobile(context);
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(compact ? 16 : 24),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),

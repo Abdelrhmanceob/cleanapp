@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/admin_layout.dart';
 import '../../core/theme.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -16,9 +17,9 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(32),
+      padding: AdminLayout.pagePadding(context),
       child: Container(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(AdminLayout.isMobile(context) ? 16 : 24),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),

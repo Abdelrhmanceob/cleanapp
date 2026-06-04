@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../core/admin_layout.dart';
 import '../../core/admin_scope.dart';
 import '../../core/admin_store.dart';
 import '../../core/theme.dart';
+import 'widgets/order_card.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -11,18 +13,21 @@ class DashboardPage extends StatelessWidget {
     final store = AdminScope.of(context);
     return ListenableBuilder(
       listenable: store,
-      builder: (context, _) => SingleChildScrollView(
-          padding: const EdgeInsets.all(32),
+      builder: (context, _) {
+        final cols = AdminLayout.gridColumns(context);
+        final mobile = AdminLayout.isMobile(context);
+        return SingleChildScrollView(
+          padding: AdminLayout.pagePadding(context),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               GridView.count(
-                crossAxisCount: 4,
+                crossAxisCount: cols,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20,
-                childAspectRatio: 1.8,
+                childAspectRatio: AdminLayout.gridChildAspectRatio(context),
                 children: [
                   _KpiCard(
                     title: 'إجمالي الطلبات',
@@ -64,10 +69,15 @@ class DashboardPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              _RecentOrdersTable(orders: store.recentOrders, store: store),
+              _RecentOrdersSection(
+                orders: store.recentOrders,
+                store: store,
+                mobile: mobile,
+              ),
             ],
           ),
-        ),
+        );
+      },
     );
   }
 
@@ -146,13 +156,34 @@ class _KpiCard extends StatelessWidget {
   }
 }
 
-class _RecentOrdersTable extends StatelessWidget {
+class _RecentOrdersSection extends StatelessWidget {
   final List<OrderModel> orders;
   final AdminStore store;
-  const _RecentOrdersTable({required this.orders, required this.store});
+  final bool mobile;
+  const _RecentOrdersSection({
+    required this.orders,
+    required this.store,
+    required this.mobile,
+  });
 
   @override
   Widget build(BuildContext context) {
+    if (mobile) {
+      if (orders.isEmpty) {
+        return const Padding(
+          padding: EdgeInsets.all(24),
+          child: Center(
+            child: Text('لا توجد طلبات بعد', style: TextStyle(color: AppTheme.textMuted)),
+          ),
+        );
+      }
+      return Column(
+        children: orders
+            .map((o) => AdminOrderCard(order: o, store: store))
+            .toList(),
+      );
+    }
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,

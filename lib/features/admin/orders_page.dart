@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import '../../core/admin_layout.dart';
 import '../../core/admin_scope.dart';
 import '../../core/admin_store.dart';
 import '../../core/theme.dart';
+import 'widgets/order_card.dart';
 
 class OrdersPage extends StatefulWidget {
   const OrdersPage({super.key});
@@ -29,53 +31,60 @@ class _OrdersPageState extends State<OrdersPage> {
       listenable: store,
       builder: (context, _) {
         final filtered = store.filteredOrders(status: _filterStatus, query: _searchQuery);
+        final mobile = AdminLayout.isMobile(context);
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(32),
+          padding: AdminLayout.pagePadding(context),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _SummaryRow(store: store).animate().fadeIn(duration: 400.ms),
               const SizedBox(height: 24),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    child: Container(
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: AppTheme.borderSubtle),
+                  Container(
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AppTheme.borderSubtle),
+                    ),
+                    child: TextField(
+                      controller: _searchController,
+                      style: const TextStyle(color: AppTheme.textDark, fontSize: 14),
+                      decoration: const InputDecoration(
+                        hintText: 'بحث بالعميل أو رقم الطلب...',
+                        hintStyle: TextStyle(color: AppTheme.textMuted, fontSize: 14),
+                        prefixIcon: Icon(Icons.search, color: AppTheme.textMuted, size: 18),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(vertical: 12),
                       ),
-                      child: TextField(
-                        controller: _searchController,
-                        style: const TextStyle(color: AppTheme.textDark, fontSize: 14),
-                        decoration: const InputDecoration(
-                          hintText: 'بحث بالعميل أو رقم الطلب...',
-                          hintStyle: TextStyle(color: AppTheme.textMuted, fontSize: 14),
-                          prefixIcon: Icon(Icons.search, color: AppTheme.textMuted, size: 18),
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 12),
-                        ),
-                        onChanged: (v) => setState(() => _searchQuery = v),
-                      ),
+                      onChanged: (v) => setState(() => _searchQuery = v),
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  ...[null, ...OrderStatus.values].map(
-                    (s) => Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: _FilterChip(
-                        label: s == null ? 'الكل' : orderStatusLabelAr(s),
-                        isActive: _filterStatus == s,
-                        color: s == null ? AppTheme.textDark : orderStatusColor(s),
-                        onTap: () => setState(() => _filterStatus = s),
-                      ),
+                  const SizedBox(height: 12),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [null, ...OrderStatus.values].map(
+                        (s) => Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: _FilterChip(
+                            label: s == null ? 'الكل' : orderStatusLabelAr(s),
+                            isActive: _filterStatus == s,
+                            color: s == null ? AppTheme.textDark : orderStatusColor(s),
+                            onTap: () => setState(() => _filterStatus = s),
+                          ),
+                        ),
+                      ).toList(),
                     ),
                   ),
                 ],
               ).animate().fadeIn(delay: 100.ms),
               const SizedBox(height: 20),
-              _OrdersTable(orders: filtered, store: store).animate().fadeIn(delay: 150.ms),
+              _OrdersSection(orders: filtered, store: store, mobile: mobile)
+                  .animate()
+                  .fadeIn(delay: 150.ms),
             ],
           ),
         );
@@ -171,13 +180,34 @@ class _FilterChip extends StatelessWidget {
   }
 }
 
-class _OrdersTable extends StatelessWidget {
+class _OrdersSection extends StatelessWidget {
   final List<OrderModel> orders;
   final AdminStore store;
-  const _OrdersTable({required this.orders, required this.store});
+  final bool mobile;
+  const _OrdersSection({
+    required this.orders,
+    required this.store,
+    required this.mobile,
+  });
 
   @override
   Widget build(BuildContext context) {
+    if (mobile) {
+      if (orders.isEmpty) {
+        return const Padding(
+          padding: EdgeInsets.all(48),
+          child: Center(
+            child: Text('لا توجد طلبات', style: TextStyle(color: AppTheme.textMuted, fontSize: 14)),
+          ),
+        );
+      }
+      return Column(
+        children: orders
+            .map((o) => AdminOrderCard(order: o, store: store, showWorker: true))
+            .toList(),
+      );
+    }
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
