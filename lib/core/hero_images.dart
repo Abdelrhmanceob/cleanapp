@@ -2,7 +2,7 @@
 class HeroImages {
   HeroImages._();
 
-  static const String _base = '/hero';
+  static const String _base = 'hero';
 
   static String asset(int n) => '$_base/hero-$n.png';
 
@@ -33,5 +33,6 @@ class HeroImages {
       isLowQualityUrl(url) ||
       url.contains('images.unsplash.com') ||
       url.contains('images.pexels.com') ||
-      url.contains('assets/hero/');
+      url.contains('assets/hero/') ||
+      url.startsWith('/hero/');
 }

@@ -2,10 +2,10 @@
   var STORAGE_KEY = 'dr_cleaner_landing';
 
   var HERO_SLIDES_HQ = [
-    { imageUrl: '/hero/hero-1.png', alt: 'خدمة تنظيف احترافية' },
-    { imageUrl: '/hero/hero-2.png', alt: 'تنظيف المنازل والفيلات' },
-    { imageUrl: '/hero/hero-3.png', alt: 'فريق عمل مصري محترف' },
-    { imageUrl: '/hero/hero-4.png', alt: 'معايير جودة عالمية' },
+    { imageUrl: 'hero/hero-1.png', alt: 'خدمة تنظيف احترافية' },
+    { imageUrl: 'hero/hero-2.png', alt: 'تنظيف المنازل والفيلات' },
+    { imageUrl: 'hero/hero-3.png', alt: 'فريق عمل مصري محترف' },
+    { imageUrl: 'hero/hero-4.png', alt: 'معايير جودة عالمية' },
   ];
 
   function isLowQualityHeroUrl(url) {
@@ -21,12 +21,13 @@
       isLowQualityHeroUrl(url) ||
       url.indexOf('images.unsplash.com') >= 0 ||
       url.indexOf('images.pexels.com') >= 0 ||
-      url.indexOf('assets/hero/') >= 0
+      url.indexOf('assets/hero/') >= 0 ||
+      url.indexOf('/hero/') === 0
     );
   }
 
   function isLocalHeroAsset(url) {
-    return url && (url.indexOf('/hero/') >= 0 || url.indexOf('hero/hero-') >= 0);
+    return url && (url.indexOf('hero/hero-') >= 0 || url.indexOf('/hero/') >= 0);
   }
 
   function optimizeHeroUrl(url, width) {

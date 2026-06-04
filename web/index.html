@@ -142,17 +142,78 @@
       }
       html { scroll-behavior: smooth; }
       body { overflow-x: hidden; }
-      #hero-carousel { direction: ltr; }
-      .carousel-track > div { flex: 0 0 100%; min-width: 100%; }
+      #hero { isolation: isolate; }
+      #hero-carousel {
+        direction: ltr;
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .carousel-track > div {
+        flex: 0 0 100%;
+        min-width: 100%;
+        height: 100%;
+        position: relative;
+      }
       .hero-slide-img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         object-position: center;
+        display: block;
       }
+      #hero-overlay {
+        z-index: 1;
+        pointer-events: none;
+      }
+      #hero-overlay .glass-card {
+        pointer-events: auto;
+      }
+      #hero-dots { z-index: 2; }
       @media (max-width: 767px) {
         .pricing-card-hover:hover { transform: translateY(-4px); }
         #pricing-grid .md\:scale-110 { transform: none !important; }
+        #hero {
+          display: flex;
+          flex-direction: column;
+          height: auto !important;
+          min-height: 0;
+        }
+        #hero-carousel {
+          position: relative;
+          inset: auto;
+          flex: 0 0 auto;
+          width: 100%;
+          height: min(48vh, 360px);
+          min-height: min(48vh, 360px);
+        }
+        #hero-overlay {
+          position: relative;
+          inset: auto;
+          flex: 0 0 auto;
+          background: none !important;
+          padding: 0;
+        }
+        #hero-overlay .container {
+          padding-top: 0;
+          padding-bottom: 0;
+          max-width: 100%;
+        }
+        #hero-overlay .glass-card {
+          background: #fff8ef;
+          border-radius: 1.25rem 1.25rem 0 0;
+          border: none;
+          box-shadow: 0 -8px 24px rgb(0 0 0 / 0.08);
+          margin-top: -1rem;
+          width: 100%;
+          max-width: 100%;
+        }
+        #hero-dots {
+          top: calc(min(48vh, 360px) - 2.5rem);
+          bottom: auto;
+        }
       }
       #stats-bar { flex-wrap: wrap; gap: 1.5rem; }
       @media (max-width: 639px) {
@@ -217,23 +278,23 @@
 </aside>
 <main class="mt-20">
 <!-- Hero Carousel Section -->
-<section class="relative h-[min(85vh,600px)] sm:h-[600px] md:h-[768px] overflow-hidden" id="hero">
+<section class="relative overflow-hidden max-md:h-auto h-[min(85vh,600px)] sm:h-[600px] md:h-[768px]" id="hero">
 <div class="carousel-track h-full" id="hero-carousel">
 <div class="min-w-full h-full relative">
-<img alt="خدمة تنظيف احترافية" class="hero-slide-img" fetchpriority="high" loading="eager" decoding="async" sizes="100vw" src="/hero/hero-1.png"/>
+<img alt="خدمة تنظيف احترافية" class="hero-slide-img" fetchpriority="high" loading="eager" decoding="async" sizes="100vw" src="hero/hero-1.png"/>
 </div>
 <div class="min-w-full h-full relative">
-<img alt="تنظيف المنازل والفيلات" class="hero-slide-img" loading="lazy" decoding="async" sizes="100vw" src="/hero/hero-2.png"/>
+<img alt="تنظيف المنازل والفيلات" class="hero-slide-img" loading="lazy" decoding="async" sizes="100vw" src="hero/hero-2.png"/>
 </div>
 <div class="min-w-full h-full relative">
-<img alt="فريق عمل مصري محترف" class="hero-slide-img" loading="lazy" decoding="async" sizes="100vw" src="/hero/hero-3.png"/>
+<img alt="فريق عمل مصري محترف" class="hero-slide-img" loading="lazy" decoding="async" sizes="100vw" src="hero/hero-3.png"/>
 </div>
 <div class="min-w-full h-full relative">
-<img alt="معايير جودة عالمية" class="hero-slide-img" loading="lazy" decoding="async" sizes="100vw" src="/hero/hero-4.png"/>
+<img alt="معايير جودة عالمية" class="hero-slide-img" loading="lazy" decoding="async" sizes="100vw" src="hero/hero-4.png"/>
 </div>
 </div>
 <!-- Content Overlay (Right side prioritized for RTL) -->
-<div class="absolute inset-0 bg-gradient-to-l from-on-surface/60 via-on-surface/20 to-transparent flex items-end md:items-center pb-lg md:pb-0">
+<div class="hero-overlay absolute inset-0 bg-gradient-to-l from-on-surface/60 via-on-surface/20 to-transparent flex items-end md:items-center pb-lg md:pb-0 max-md:pb-0" id="hero-overlay">
 <div class="container mx-auto px-margin-mobile md:px-margin-desktop text-right w-full max-w-4xl mr-0 ml-auto">
 <div class="glass-card p-md sm:p-lg rounded-2xl w-full max-w-2xl mx-auto md:mx-0 md:mr-0 md:ml-auto border border-white/20 shadow-2xl animate-fade-in-up">
 <h1 class="text-headline-lg-mobile md:text-headline-xl font-headline-xl text-on-surface mb-sm"><span id="hero-title-line1">تنظيف احترافي</span><br/><span class="text-primary" id="hero-title-highlight">على الطلب</span></h1>
